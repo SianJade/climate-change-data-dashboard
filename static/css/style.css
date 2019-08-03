@@ -1,5 +1,5 @@
 .jumbotron {
-    background-image: url(static/assets/polarbear-ice.png);
+    background-image: url("../assets/polarbear-ice.png");
     height: 100vh;
     background-position: center;
     background-size: cover;
