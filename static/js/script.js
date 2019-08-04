@@ -1,3 +1,7 @@
+queue()
+    .defer(d3.json, 'data/epa-sea-level.csv')
+    .await(countdown);
+    
     function countdown() {
         var startDate = new Date();
         var endDate = new Date('March 28, 2030 00:00:00'); //11 years from UN report publication date
