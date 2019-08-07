@@ -5,3 +5,17 @@
     background-size: cover;
     background-repeat: no-repeat;
 }
+
+h2 {
+    text-shadow: 1px 1px #000;
+}
+
+#sea_level_rise{
+    height: 100vh;
+}
+
+path {
+    stroke: red;
+    stroke-width: 2px;
+    fill: none;
+}
