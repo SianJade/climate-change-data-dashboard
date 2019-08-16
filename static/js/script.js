@@ -1,8 +1,7 @@
 d3.queue()
-    .defer(d3.json, 'world.topojson')
+    .defer(d3.json, 'epa-sea-level.csv')
     .await(countdown);
-    
-    
+
 //countdown
 
 function countdown() {
@@ -45,17 +44,46 @@ function countdown() {
 
 //sea level rise line graph
 
-d3.csv("data/epa-sea-level.csv").get(function(error, data) {
-    if (error) throw error;
-    
-    var height = 500;
-    var width = data.length*10;
+var sea_level_rise = dc.barChart('#sea_level_rise');
 
+d3.csv("data/epa-sea-level.csv").get(function(error, data) {
+    var mycrossfilter = mycrossfilter(data);
+    if (error) throw error;
+
+    
+            // age dimension
+            var yearDimension = mycrossfilter.dimension(function(data) { 
+             return data.Year;
+            });
+       //     var ageGroup = ageDimension.group().reduceCount();
+
+            // gender dimension
+            var sea_level_rise_Dimension = mycrossfilter.dimension(function(data) { 
+               return data.CSIRO_Adjusted_Sea_Level; 
+            });
+          //  var genderGroup = genderDimension.group().reduceCount();
+            
     var maxRise = d3.max(data, function(d) { return d.CSIRO_Adjusted_Sea_Level; });
 
     var maxDate = d3.max(data, function(d) { return d.Year; });
     var minDate = d3.min(data, function(d) { return d.Year; });
 
+    sea_level_rise
+        d3.width(500)
+        d3.width(data.length * 10)
+        d3.xAxisLabel('Year')
+        d3.yAxisLabel('Sea Level Rise')
+        d3.x(d3.scale.linear().domain([minDate,maxDate]))
+        d3.elasticY(true);
+        d3.elasticX(true);
+        d3.dimension(yearDimension);
+     //   .group(ageGroup);
+    
+   sea_level_rise.render();
+    //var height = 500;
+    //var width = data.length * 10;
+
+/*
     var n = 135; //number of data points
 
     var y = d3.scaleLinear()
@@ -68,36 +96,44 @@ d3.csv("data/epa-sea-level.csv").get(function(error, data) {
 
     var yAxis = d3.axisLeft(y);
     var xAxis = d3.axisBottom(x);
-
+    //   d3.elasticY(true);
+    //    d3.elasticX(true);
     var svg = d3.select('#sea_level_rise')
         .append('svg')
         .attr('height', '100%')
         .attr('width', '100%');
 
-    var margin = { left: 50, right: 50, top: 40, bottom: 0 };
+    var margin = { left: 50, right: 50, top: 50, bottom: 50 };
 
     var chartGroup = svg.append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-        
+
     var line = d3.line()
         .x(function(d) { return x(d.Year); })
         .y(function(d) { return y(d.CSIRO_Adjusted_Sea_Level); });
 
+    var line2 = d3.line()
+        .x(function(d) { return x(d.Year); })
+        .y(function(d) { return y(d.Lower_Error_Bound); });
+
     chartGroup.append("path").attr("d", line(data));
-    
+    chartGroup.append("path").attr("d", line2(data)).attr('class', 'line2');
+
     chartGroup.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("y", 0 - margin.left/2)
-        .attr("x", 0 - (height/2))
+        .attr("y", 0 - margin.left / 2)
+        .attr("x", 0 - (height / 2))
         .attr("dy", "1em")
+        .classed("axis", true)
         .style("text-anchor", "middle")
         .text("Sea Level Rise (mm)");
-        
-    chartGroup.append("text")
-              .attr("x", 0)
-              .attr("y", 500)
-              .style("text-anchor", "middle")
-              .attr("transform", "translate(" + width/2 + ",80)")
-              .text("Year");
 
+    chartGroup.append("text")
+        .attr("x", 0)
+        .attr("y", 500)
+        .classed("axis", true)
+        .style("text-anchor", "middle")
+        .attr("transform", "translate(" + width / 2 + ",80)")
+        .text("Year");
+*/
 });
