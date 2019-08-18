@@ -43,43 +43,28 @@ function countdown() {
 }
 
 //sea level rise line graph
-var seaLevelRiseChart = dc.compositeChart('#sea_level_rise');
+var seaLevelRiseChart = dc.lineChart('#sea_level_rise');
 
-d3.csv("data/epa-sea-level.csv", function(error,data) {
+d3.csv("data/epa-sea-level.csv", function(error, data) {
 
     var ndx = crossfilter(data);
 
     var yearDim = ndx.dimension(dc.pluck('Year'));
 
-    var minDate = yearDim.bottom(1)[0].date;
-    var maxDate = yearDim.top(1)[0].date;
+    var minDate = yearDim.bottom(1)[0].Year;
+    var maxDate = yearDim.top(1)[0].Year;
 
-    var maxRise = d3.max(data, function(d) { return d.CSIRO_Adjusted_Sea_Level; });
+    var totalRise = yearDim.group().reduceSum(dc.pluck('CSIRO_Adjusted_Sea_Level'));
 
-    adjustedGroup = yearDim.group().reduceSum(dc.pluck('CSIRO_Adjusted_Sea_Level'));
-    lowerErrorGroup = yearDim.group().reduceSum(dc.pluck('Lower_Error_Bound'));
-    upperErrorGroup = yearDim.group().reduceSum(dc.pluck('Upper_Error_Bound'));
-
-    seaLevelRiseChart.width(500)
+    seaLevelRiseChart
+        .width(1000)
         .height(500)
-        .x(d3.scale.linear().domain([minDate,maxDate]))
+        .margins({ top: 50, right: 50, bottom: 50, left: 50 })
+        .dimension(yearDim)
+        .group(totalRise)
+        .transitionDuration(500)
+        .x(d3.scale.linear().domain([minDate, maxDate]))
         .yAxisLabel("Global Sea Level Rise (mm)")
         .xAxisLabel("Year")
-        .legend(dc.legend().x(80).y(20).itemHeight(15).gap(5))
-        .renderHorizontalGridLines(true)
-        .compose([
-            dc.lineChart(seaLevelRiseChart)
-            .dimension(yearDim)
-            .group(adjustedGroup)
-            .colors('red'),
-            dc.lineChart(seaLevelRiseChart)
-            .dimension(yearDim)
-            .group(lowerErrorGroup)
-            .colors('blue'),
-            dc.lineChart(seaLevelRiseChart)
-            .dimension(yearDim)
-            .group(upperErrorGroup)
-            .colors('yellow')
-        ])
-        .render();
+    dc.renderAll();
 });
