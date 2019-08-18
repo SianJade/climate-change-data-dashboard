@@ -54,14 +54,21 @@ d3.csv("data/epa-sea-level.csv", function(error, data) {
     var minDate = yearDim.bottom(1)[0].Year;
     var maxDate = yearDim.top(1)[0].Year;
 
-    var totalRise = yearDim.group().reduceSum(dc.pluck('CSIRO_Adjusted_Sea_Level'));
+    var averageRise = yearDim.group().reduceSum(dc.pluck('CSIRO_Adjusted_Sea_Level'));
+    var lowerErrorBound = yearDim.group().reduceSum(dc.pluck('Lower_Error_Bound'));
+    var upperErrorBound = yearDim.group().reduceSum(dc.pluck('Upper_Error_Bound'));
 
     seaLevelRiseChart
         .width(1000)
         .height(500)
         .margins({ top: 50, right: 50, bottom: 50, left: 50 })
         .dimension(yearDim)
-        .group(totalRise)
+        .group(averageRise)
+        .stack(lowerErrorBound)
+        .stack(upperErrorBound)
+        .xyTipsOn(true)
+        .legend(dc.legend().x(800).y(50).itemHeight(10).gap(10))
+        .brushOn(false)
         .transitionDuration(500)
         .x(d3.scale.linear().domain([minDate, maxDate]))
         .yAxisLabel("Global Sea Level Rise (mm)")

@@ -15,7 +15,12 @@ h2 {
 }
 
 path {
-    stroke: red;
-    stroke-width: 2px;
+    stroke-width: 1px;
     fill: none;
+}
+
+.axis{
+    stroke: #fff;
+    fill: none;
+    stroke-width: 1px;
 }
