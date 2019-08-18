@@ -42,12 +42,12 @@ function countdown() {
     setTimeout(countdown, 1000);
 }
 
-//sea level rise line graph
+//sea level rise line graph//
 var seaLevelRiseChart = dc.lineChart('#sea_level_rise');
 
-d3.csv("data/epa-sea-level.csv", function(error, data) {
+d3.csv("data/epa-sea-level.csv", function(error, seaData) {
 
-    var ndx = crossfilter(data);
+    var ndx = crossfilter(seaData);
 
     var yearDim = ndx.dimension(dc.pluck('Year'));
 
@@ -73,5 +73,64 @@ d3.csv("data/epa-sea-level.csv", function(error, data) {
         .x(d3.scale.linear().domain([minDate, maxDate]))
         .yAxisLabel("Global Sea Level Rise (mm)")
         .xAxisLabel("Year")
+        .render();
+});
+
+
+//global temperature rise chart//
+var tempRiseChart = dc.compositeChart('#temperature_rise');
+
+d3.csv("data/global-temperature_rise.csv", function(error, tempData) {
+
+    var ndx = crossfilter(tempData)
+
+    yearDim = ndx.dimension(dc.pluck('Year'));
+
+    var minDate = yearDim.bottom(1)[0].Year;
+    var maxDate = yearDim.top(1)[0].Year;
+
+    function riseByLocation(Entity) {
+        return function(d) {
+            if (d.Entity === Entity) {
+                return d.Median;
+            }
+            else {
+                return 0;
+            }
+        }
+    }
+
+    var globalRise = yearDim.group().reduceSum(riseByLocation('Global'));
+    var northernRise = yearDim.group().reduceSum(riseByLocation('Northern_Hemisphere'));
+    var southernRise = yearDim.group().reduceSum(riseByLocation('Southern_Hemisphere'));
+    var tropicsRise = yearDim.group().reduceSum(riseByLocation('Tropics'));
+
+    tempRiseChart
+        .width(1000)
+        .height(500)
+        .margins({ top: 50, right: 50, bottom: 50, left: 50 })
+        .xyTipsOn(true)
+        .legend(dc.legend().x(800).y(50).itemHeight(10).gap(10))
+        .dimension(yearDim)
+        .brushOn(false)
+        .transitionDuration(500)
+        .x(d3.scale.linear().domain([minDate, maxDate]))
+        .yAxisLabel("Average temperature rise (c)")
+        .xAxisLabel("Year")
+        .compose([
+            dc.lineChart(tempRiseChart)
+            .colors('red')
+            .group(globalRise, 'Global average temperature rise'),
+            dc.lineChart(tempRiseChart)
+            .colors('blue')
+            .group(northernRise, 'Northern Hemisphere average temperature rise'),
+            dc.lineChart(tempRiseChart)
+            .colors('green')
+            .group(southernRise, 'Southern Hemisphere average temperature rise'),
+            dc.lineChart(tempRiseChart)
+            .colors('yellow')
+            .group(tropicsRise, 'Tropics average temperature rise')
+        ])
+        .render();
     dc.renderAll();
 });
