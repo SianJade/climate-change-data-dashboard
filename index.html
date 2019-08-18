@@ -8,7 +8,7 @@
     <title>Climate Change</title>
 
     <link rel="stylesheet" href="static/css/bootstrap.min.css" type="text/css" />
-    <link rel="stylesheet" href="satic/css/dc.min.css" type="text/css" />
+    <link rel="stylesheet" href="static/css/dc.min.css" type="text/css" />
     <link rel="stylesheet" href="static/css/style.css" type="text/css" />
 
 </head>
@@ -21,7 +21,7 @@
             <a class="btn btn-danger">See the truth <strong>now</strong></a>
         </div>
     </div>
-    <table class="container">
+    <table class="container text-center">
         <h2 class="text-center">The clock is ticking...</h2><br>
         <tr class="countdown">
             <td id="years"></td>
@@ -44,12 +44,13 @@
 
     <div class="container">
         <div class="row">
-            <div class="sea-level-container col-lg-8">
-                <h2 class="text-center">Global Average Sea Level Rise</h2>
-                <p class="text-center">Average sea levels have swelled over 8 inches (about 23 cm) since 1880, with about three of those inches gained in the last 25 years. Every year, the sea rises another 0.13 inches (3.2 mm).</p>
+            <div class="sea-level-container text-center">
+                <h2>Global Average Sea Level Rise</h2>
+                <p>Average sea levels have swelled over 8 inches (about 23 cm) since 1880, with about three of those inches gained in the last 25 years. Every year, the sea rises another 0.13 inches (3.2 mm).</p>
                 <div id="sea_level_rise" class="text-center"></div>
             </div>
-            <div class="col-lg-4">
+            </div>
+            <div class="row text-center">
                 <h3>What causes this?</h3>
                 <p>The three biggest causes of rising sea levels are:
                     <ul>
@@ -59,8 +60,7 @@
                     </ul>
                 </p>
                 </div>
-                </div>
-                <div class="info-container text-center col-lg-10">
+                <div class="info-container text-center">
                 <h3>What effect will this have?</h3>
                 <ul>
                     <li>When sea levels rise as rapidly as they have been, even a small increase can have devastating effects on coastal habitats farther inland, it can cause destructive erosion, wetland flooding, aquifer and agricultural soil contamination
@@ -72,7 +72,7 @@
                 </ul>
             </div>
     </div>
-    <br>
+    <hr>
     <div class="container temperature-container">
         <h2 class="text-center">Global Average Temperature Rise</h2>
         <div id="temperature_rise" class="col-lg-10 offset-lg-2"></div>

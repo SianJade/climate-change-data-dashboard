@@ -1,5 +1,5 @@
 queue()
-    .defer(d3.json, 'epa-sea-level.csv')
+    .defer(d3.json, 'data/epa-sea-level.csv')
     .await(countdown);
 
 //countdown
@@ -63,9 +63,9 @@ d3.csv("data/epa-sea-level.csv", function(error, seaData) {
         .height(500)
         .margins({ top: 50, right: 50, bottom: 50, left: 50 })
         .dimension(yearDim)
-        .group(averageRise)
-        .stack(lowerErrorBound)
-        .stack(upperErrorBound)
+        .group(averageRise, 'CSIRO Adjusted Sea Level Rise')
+        .stack(lowerErrorBound, 'Lower Error Bound')
+        .stack(upperErrorBound, 'Upper Error Bound')
         .xyTipsOn(true)
         .legend(dc.legend().x(800).y(50).itemHeight(10).gap(10))
         .brushOn(false)
@@ -80,7 +80,7 @@ d3.csv("data/epa-sea-level.csv", function(error, seaData) {
 //global temperature rise chart//
 var tempRiseChart = dc.compositeChart('#temperature_rise');
 
-d3.csv("data/global-temperature_rise.csv", function(error, tempData) {
+d3.csv("data/global-temperature-rise.csv", function(error, tempData) {
 
     var ndx = crossfilter(tempData)
 
@@ -109,7 +109,6 @@ d3.csv("data/global-temperature_rise.csv", function(error, tempData) {
         .width(1000)
         .height(500)
         .margins({ top: 50, right: 50, bottom: 50, left: 50 })
-        .xyTipsOn(true)
         .legend(dc.legend().x(800).y(50).itemHeight(10).gap(10))
         .dimension(yearDim)
         .brushOn(false)
