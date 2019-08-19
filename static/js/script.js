@@ -142,10 +142,21 @@ d3.csv('data/annual-share-of-co2-emissions.csv', function(error, co2Data) {
     var ndx = crossfilter(co2Data);
 
     countryDim = ndx.dimension(dc.pluck('Entity'));
-    
-    var year = co2Data.filter(function(d){if (d.Year === '1997' && d.Global_CO2_emissions_share >='1') return d.Entity;});
-    var emissions = co2Data.filter(function(d){return d.Global_CO2_emissions_share >='1' });
-    
-     console.log(year);
 
-      });
+    var ninetySeven = co2Data.filter(function(d) {
+        if (d.Year === '1997' && d.Global_CO2_emissions_share >= '1') return d.Entity;
+    });
+    
+    var zeroSeven = co2Data.filter(function(d) {
+        if (d.Year === '2007' && d.Global_CO2_emissions_share >= '1') return d.Entity;
+    });
+    
+    var twentySeventeen = co2Data.filter(function(d) {
+        if (d.Year === '2017' && d.Global_CO2_emissions_share >= '1') return d.Entity;
+    });
+    
+    console.log(ninetySeven,zeroSeven,twentySeventeen);
+    
+    
+    
+});
