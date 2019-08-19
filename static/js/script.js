@@ -67,7 +67,7 @@ d3.csv("data/epa-sea-level.csv", function(error, seaData) {
         .stack(lowerErrorBound, 'Lower Error Bound')
         .stack(upperErrorBound, 'Upper Error Bound')
         .xyTipsOn(true)
-        .legend(dc.legend().x(800).y(50).itemHeight(10).gap(10))
+        .legend(dc.legend().x(750).y(50).itemHeight(10).gap(10))
         .brushOn(false)
         .transitionDuration(500)
         .x(d3.scale.linear().domain([minDate, maxDate]))
@@ -109,12 +109,12 @@ d3.csv("data/global-temperature-rise.csv", function(error, tempData) {
         .width(1000)
         .height(500)
         .margins({ top: 50, right: 50, bottom: 50, left: 50 })
-        .legend(dc.legend().x(800).y(50).itemHeight(10).gap(10))
+        .legend(dc.legend().x(650).y(50).itemHeight(10).gap(10))
         .dimension(yearDim)
         .brushOn(false)
         .transitionDuration(500)
         .x(d3.scale.linear().domain([minDate, maxDate]))
-        .yAxisLabel("Average temperature rise (c)")
+        .yAxisLabel("Average temperature rise (°F)")
         .xAxisLabel("Year")
         .compose([
             dc.lineChart(tempRiseChart)
@@ -133,3 +133,19 @@ d3.csv("data/global-temperature-rise.csv", function(error, tempData) {
         .render();
     dc.renderAll();
 });
+
+//co2 emissions pie chart
+//var co2Chart = dc.pieChart('#co2_emissions');
+
+d3.csv('data/annual-share-of-co2-emissions.csv', function(error, co2Data) {
+
+    var ndx = crossfilter(co2Data);
+
+    countryDim = ndx.dimension(dc.pluck('Entity'));
+    
+    var year = co2Data.filter(function(d){return d.Year === '1997'});
+    var emissions = co2Data.filter(function(d){return d.Global_CO2_emissions_share >='1' });
+    
+     console.log(year,emissions);
+
+      });
