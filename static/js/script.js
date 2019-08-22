@@ -46,9 +46,10 @@ function countdown() {
 
 
 //sea level rise line graph//
-var seaLevelRiseChart = dc.lineChart('#sea_level_rise');
 
 d3.csv("data/epa-sea-level.csv", function(error, seaData) {
+    
+    var seaLevelRiseChart = dc.lineChart('#sea_level_rise');
 
     var ndx = crossfilter(seaData);
 
@@ -83,9 +84,10 @@ d3.csv("data/epa-sea-level.csv", function(error, seaData) {
 
 
 //global temperature rise chart//
-var tempRiseChart = dc.compositeChart('#temperature_rise');
 
 d3.csv("data/global-temperature-rise.csv", function(error, tempData) {
+    
+    var tempRiseChart = dc.compositeChart('#temperature_rise');
 
     var ndx = crossfilter(tempData)
 
@@ -151,20 +153,22 @@ d3.csv('data/annual-share-of-co2-emissions.csv', function(error, co2ShareData) {
 
     countryDim = ndx.dimension(dc.pluck('Entity'));
 
-    var shareOfGlobalCo2 = CountryDim.group().reduceSum(dc.pluck('Global_CO2_emissions_share'));
-
+    var shareOfGlobalCo2 = countryDim.group().reduceSum(dc.pluck('Global_CO2_emissions_share'));
+    
     co2ShareChart
         .width(1000)
         .height(500)
         .margins({ top: 50, right: 50, bottom: 50, left: 50 })
         .dimension(countryDim)
         .group(shareOfGlobalCo2)
-        .transitionDuration(500)
-        .x(d3.scale.ordinal().domain('Entity'))
-        .yAxisLabel("Share of Global co2 Emissions (%)")
-        .xAxisLabel("Country")
+        .x(d3.scale.ordinal().domain('Afghanistan','Zimbabwe'))
+        .y(d3.scale.linear().domain([1,100]))
+        .r(d3.scale.linear().domain(0,100))
+        .renderLabel(true)
+        .renderHorizontalGridLines(true)
+        .maxBubbleRelativeSize(0.8)
+        .render();
 });
-
 
 
 
@@ -187,14 +191,11 @@ d3.csv('data/global-co2-concentration-ppm.csv', function(error, co2AtmosphereDat
     atmosphericCO2chart
         .width(1000)
         .height(500)
-        .margins({ top: 50, right: 50, bottom: 50, left: 50 })
-        .dimension(yearDim)
-        .group(co2ppm)
-        .brushOn(false)
-        .transitionDuration(500)
         .x(d3.scale.linear().domain([minDate, maxDate]))
+        .brushOn(false)
         .yAxisLabel("Atmospheric CO2 concentration (parts per million (ppm))")
         .xAxisLabel("Year")
+        .dimension(yearDim)
+        .group(co2ppm)
         .render();
-
 });
