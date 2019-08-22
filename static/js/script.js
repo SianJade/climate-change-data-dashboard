@@ -42,6 +42,9 @@ function countdown() {
     setTimeout(countdown, 1000);
 }
 
+
+
+
 //sea level rise line graph//
 var seaLevelRiseChart = dc.lineChart('#sea_level_rise');
 
@@ -75,6 +78,8 @@ d3.csv("data/epa-sea-level.csv", function(error, seaData) {
         .xAxisLabel("Year")
         .render();
 });
+
+
 
 
 //global temperature rise chart//
@@ -134,29 +139,63 @@ d3.csv("data/global-temperature-rise.csv", function(error, tempData) {
     dc.renderAll();
 });
 
+
+
 //co2 emissions pie chart
-//var co2Chart = dc.pieChart('#co2_emissions');
+//var co2Charts = dc.pieChart('#co2_emissions');
 
-d3.csv('data/annual-share-of-co2-emissions.csv', function(error, co2Data) {
+//d3.csv('data/annual-share-of-co2-emissions.csv', function(error, co2ShareData) {
 
-    var ndx = crossfilter(co2Data);
+//  var ndx = crossfilter(co2ShareData);
 
-    countryDim = ndx.dimension(dc.pluck('Entity'));
+//  countryDim = ndx.dimension(dc.pluck('Entity'));
 
-    var ninetySeven = co2Data.filter(function(d) {
-        if (d.Year === '1997' && d.Global_CO2_emissions_share >= '1') return d.Entity;
-    });
+//   var ninetySeven = co2ShareData.filter(function(d) {
+//        if (d.Year === '1997' && d.Global_CO2_emissions_share >= '1') return d.Entity;
+//   });
+
+//   var zeroSeven = co2ShareData.filter(function(d) {
+//      if (d.Year === '2007' && d.Global_CO2_emissions_share >= '1') return d.Entity;
+//    });
+
+//    var twentySeventeen = co2ShareData.filter(function(d) {
+//        if (d.Year === '2017' && d.Global_CO2_emissions_share >= '1') return d.Entity;
+//    });
+//
+//   console.log(ninetySeven, zeroSeven, twentySeventeen);
+
+// });
+
+
+
+
+//Atmospheric co2 concentration parts per million (ppm) chart
+
+
+d3.csv('data/global-co2-concentration-ppm.csv', function(error, co2AtmosphereData) {
     
-    var zeroSeven = co2Data.filter(function(d) {
-        if (d.Year === '2007' && d.Global_CO2_emissions_share >= '1') return d.Entity;
-    });
+    var atmosphericCO2chart = dc.barChart('#co2_ppm_chart');
     
-    var twentySeventeen = co2Data.filter(function(d) {
-        if (d.Year === '2017' && d.Global_CO2_emissions_share >= '1') return d.Entity;
-    });
+    var ndx = crossfilter(co2AtmosphereData);
     
-    console.log(ninetySeven,zeroSeven,twentySeventeen);
+    yearDim = ndx.dimension(dc.pluck('Year'));
     
+    var minDate = yearDim.bottom(1)[0].Year;
+    var maxDate = yearDim.top(1)[0].Year;
     
+    var co2ppm = yearDim.group().reduceSum(dc.pluck('CO2_concentration_ppm'));
+    
+    atmosphericCO2chart
+     .width(1000)
+        .height(500)
+        .margins({ top: 50, right: 50, bottom: 50, left: 50 })
+        .dimension(yearDim)
+        .group(co2ppm)
+        .brushOn(false)
+        .transitionDuration(500)
+        .x(d3.scale.linear().domain([minDate, maxDate]))
+        .yAxisLabel("Atmospheric CO2 concentration (parts per million (ppm))")
+        .xAxisLabel("Year")
+        .render();
     
 });
