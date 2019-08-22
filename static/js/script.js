@@ -141,30 +141,29 @@ d3.csv("data/global-temperature-rise.csv", function(error, tempData) {
 
 
 
-//co2 emissions pie chart
-//var co2Charts = dc.pieChart('#co2_emissions');
+//share of global co2 emissions bubble chart
 
-//d3.csv('data/annual-share-of-co2-emissions.csv', function(error, co2ShareData) {
+d3.csv('data/annual-share-of-co2-emissions.csv', function(error, co2ShareData) {
 
-//  var ndx = crossfilter(co2ShareData);
+    var co2ShareChart = dc.bubbleChart('#co2_emissions');
 
-//  countryDim = ndx.dimension(dc.pluck('Entity'));
+    var ndx = crossfilter(co2ShareData);
 
-//   var ninetySeven = co2ShareData.filter(function(d) {
-//        if (d.Year === '1997' && d.Global_CO2_emissions_share >= '1') return d.Entity;
-//   });
+    countryDim = ndx.dimension(dc.pluck('Entity'));
 
-//   var zeroSeven = co2ShareData.filter(function(d) {
-//      if (d.Year === '2007' && d.Global_CO2_emissions_share >= '1') return d.Entity;
-//    });
+    var shareOfGlobalCo2 = CountryDim.group().reduceSum(dc.pluck('Global_CO2_emissions_share'));
 
-//    var twentySeventeen = co2ShareData.filter(function(d) {
-//        if (d.Year === '2017' && d.Global_CO2_emissions_share >= '1') return d.Entity;
-//    });
-//
-//   console.log(ninetySeven, zeroSeven, twentySeventeen);
-
-// });
+    co2ShareChart
+        .width(1000)
+        .height(500)
+        .margins({ top: 50, right: 50, bottom: 50, left: 50 })
+        .dimension(countryDim)
+        .group(shareOfGlobalCo2)
+        .transitionDuration(500)
+        .x(d3.scale.ordinal().domain('Entity'))
+        .yAxisLabel("Share of Global co2 Emissions (%)")
+        .xAxisLabel("Country")
+});
 
 
 
@@ -173,20 +172,20 @@ d3.csv("data/global-temperature-rise.csv", function(error, tempData) {
 
 
 d3.csv('data/global-co2-concentration-ppm.csv', function(error, co2AtmosphereData) {
-    
+
     var atmosphericCO2chart = dc.barChart('#co2_ppm_chart');
-    
+
     var ndx = crossfilter(co2AtmosphereData);
-    
+
     yearDim = ndx.dimension(dc.pluck('Year'));
-    
+
     var minDate = yearDim.bottom(1)[0].Year;
     var maxDate = yearDim.top(1)[0].Year;
-    
+
     var co2ppm = yearDim.group().reduceSum(dc.pluck('CO2_concentration_ppm'));
-    
+
     atmosphericCO2chart
-     .width(1000)
+        .width(1000)
         .height(500)
         .margins({ top: 50, right: 50, bottom: 50, left: 50 })
         .dimension(yearDim)
@@ -197,5 +196,5 @@ d3.csv('data/global-co2-concentration-ppm.csv', function(error, co2AtmosphereDat
         .yAxisLabel("Atmospheric CO2 concentration (parts per million (ppm))")
         .xAxisLabel("Year")
         .render();
-    
+
 });
