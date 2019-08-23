@@ -1,12 +1,13 @@
 queue()
-    .defer(d3.json, 'data/epa-sea-level.csv')
+    .defer(d3.csv, 'data/epa-sea-level.csv')
     .await(countdown);
 
 //countdown
 
 function countdown() {
+    var deadline = 'March 28, 2030 00:00:00'; //11 years from UN report publication date
     var startDate = new Date();
-    var endDate = new Date('March 28, 2030 00:00:00'); //11 years from UN report publication date
+    var endDate = new Date(deadline);
 
     var startTime = startDate.getTime();
     var endTime = endDate.getTime();
@@ -152,6 +153,9 @@ d3.csv('data/annual-share-of-co2-emissions.csv', function(error, co2ShareData) {
     var ndx = crossfilter(co2ShareData);
 
     countryDim = ndx.dimension(dc.pluck('Entity'));
+    
+    var AFG = countryDim.top(1)[0].Entity;
+    var ZWE = countryDim.bottom(1)[0].Entity;
 
     var shareOfGlobalCo2 = countryDim.group().reduceSum(dc.pluck('Global_CO2_emissions_share'));
     
@@ -161,7 +165,7 @@ d3.csv('data/annual-share-of-co2-emissions.csv', function(error, co2ShareData) {
         .margins({ top: 50, right: 50, bottom: 50, left: 50 })
         .dimension(countryDim)
         .group(shareOfGlobalCo2)
-        .x(d3.scale.ordinal().domain('Afghanistan','Zimbabwe'))
+        .x(d3.scale.ordinal().domain(AFG,ZWE))
         .y(d3.scale.linear().domain([1,100]))
         .r(d3.scale.linear().domain(0,100))
         .renderLabel(true)
