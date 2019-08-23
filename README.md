@@ -6,6 +6,8 @@ Stream Two Project: Interactive Frontend Development - Code Institute
 ## UX
 The purpose of this data dashboard is raise awareness amongst the general public about climate change via the use of datasets and graphs that clearly demonstrate the negative effects of climate change on our planet, as well as to provide datasets and graphs that will show the user what the most effective ways to combat the negative effects of climate change on both as an individual, and on a societal and global scale.
 
+A live desktop demo can be found [here](https://sianjade.github.io/climate-change-data-dashboard/).
+
 ## Features
 
 ### Existing Features
