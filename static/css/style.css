@@ -15,10 +15,10 @@ path {
     fill: none;
 }
 
-.axis{
-    stroke: #fff;
-    fill: none;
-    stroke-width: 1px;
+.chart-div {
+    background-color: #d3d3d3;
+    border-radius: 7.5px;
+    box-shadow: 1px 1px 5px 1px #000;
 }
 
 .sea-level-container {
