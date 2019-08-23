@@ -10,6 +10,10 @@ h2 {
     text-shadow: 1px 1px #000;
 }
 
+.countdown{
+    font-size: 25px;
+}
+
 path {
     stroke-width: 1px;
     fill: none;
