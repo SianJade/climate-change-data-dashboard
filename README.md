@@ -4,14 +4,17 @@ Stream Two Project: Interactive Frontend Development - Code Institute
  
  
 ## UX
-
+The purpose of this data dashboard is raise awareness amongst the general public about climate change via the use of datasets and graphs that clearly demonstrate the negative effects of climate change on our planet, as well as to provide datasets and graphs that will show the user what the most effective ways to combat the negative effects of climate change on both as an individual, and on a societal and global scale.
 
 ## Features
 
 ### Existing Features
 
+The dashboard features a Javascript countdown timer which is counting down to 11 years from the publication date of the UN report cited in the page's jumbotron; this feature is designed to give the reader a sense of how little time is left for measures against the impacts of climate change to be implemented, it is designed to provide a sense of urgency to the user.
+
 ### Features Left to Implement
 
+In future versions of the website, I would like to implement world maps using TopoGeo.JSON
 
 ## Technologies Used
 
