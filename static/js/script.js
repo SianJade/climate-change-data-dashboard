@@ -5,21 +5,21 @@ queue()
 //countdown
 
 function countdown() {
-    var deadline = 'March 28, 2030 00:00:00'; //11 years from UN report publication date
-    var startDate = new Date();
-    var endDate = new Date(deadline);
+    let deadline = 'March 28, 2030 00:00:00'; //11 years from UN report publication date
+    let startDate = new Date();
+    let endDate = new Date(deadline);
 
-    var startTime = startDate.getTime();
-    var endTime = endDate.getTime();
+    let startTime = startDate.getTime();
+    let endTime = endDate.getTime();
 
-    var timeRemaining = endTime - startTime;
+    let timeRemaining = endTime - startTime;
 
-    var seconds = Math.floor(timeRemaining / 1000);
-    var minutes = Math.floor(seconds / 60);
-    var hours = Math.floor(minutes / 60);
-    var days = Math.floor(hours / 24);
-    var months = Math.floor(days / 30.44); //average number of days in a month
-    var years = Math.floor(months / 12);
+    let seconds = Math.floor(timeRemaining / 1000);
+    let minutes = Math.floor(seconds / 60);
+    let hours = Math.floor(minutes / 60);
+    let days = Math.floor(hours / 24);
+    let months = Math.floor(days / 30.44); //average number of days in a month
+    let years = Math.floor(months / 12);
 
     months = months % 12;
     days = Math.floor(days % 30.44);
@@ -50,18 +50,18 @@ function countdown() {
 
 d3.csv("data/epa-sea-level.csv", function(error, seaData) {
     
-    var seaLevelRiseChart = dc.lineChart('#sea_level_rise');
+    let seaLevelRiseChart = dc.lineChart('#sea_level_rise');
 
-    var ndx = crossfilter(seaData);
+    let ndx = crossfilter(seaData);
 
-    var yearDim = ndx.dimension(dc.pluck('Year'));
+    let yearDim = ndx.dimension(dc.pluck('Year'));
 
-    var minDate = yearDim.bottom(1)[0].Year;
-    var maxDate = yearDim.top(1)[0].Year;
+    let minDate = yearDim.bottom(1)[0].Year;
+    let maxDate = yearDim.top(1)[0].Year;
 
-    var averageRise = yearDim.group().reduceSum(dc.pluck('CSIRO_Adjusted_Sea_Level'));
-    var lowerErrorBound = yearDim.group().reduceSum(dc.pluck('Lower_Error_Bound'));
-    var upperErrorBound = yearDim.group().reduceSum(dc.pluck('Upper_Error_Bound'));
+    let averageRise = yearDim.group().reduceSum(dc.pluck('CSIRO_Adjusted_Sea_Level'));
+    let lowerErrorBound = yearDim.group().reduceSum(dc.pluck('Lower_Error_Bound'));
+    let upperErrorBound = yearDim.group().reduceSum(dc.pluck('Upper_Error_Bound'));
 
     seaLevelRiseChart
         .width(1000)
@@ -88,14 +88,14 @@ d3.csv("data/epa-sea-level.csv", function(error, seaData) {
 
 d3.csv("data/global-temperature-rise.csv", function(error, tempData) {
     
-    var tempRiseChart = dc.compositeChart('#temperature_rise');
+    let tempRiseChart = dc.compositeChart('#temperature_rise');
 
-    var ndx = crossfilter(tempData)
+    let ndx = crossfilter(tempData)
 
     yearDim = ndx.dimension(dc.pluck('Year'));
 
-    var minDate = yearDim.bottom(1)[0].Year;
-    var maxDate = yearDim.top(1)[0].Year;
+    let minDate = yearDim.bottom(1)[0].Year;
+    let maxDate = yearDim.top(1)[0].Year;
 
     function riseByLocation(Entity) {
         return function(d) {
@@ -108,10 +108,10 @@ d3.csv("data/global-temperature-rise.csv", function(error, tempData) {
         }
     }
 
-    var globalRise = yearDim.group().reduceSum(riseByLocation('Global'));
-    var northernRise = yearDim.group().reduceSum(riseByLocation('Northern_Hemisphere'));
-    var southernRise = yearDim.group().reduceSum(riseByLocation('Southern_Hemisphere'));
-    var tropicsRise = yearDim.group().reduceSum(riseByLocation('Tropics'));
+    let globalRise = yearDim.group().reduceSum(riseByLocation('Global'));
+    let northernRise = yearDim.group().reduceSum(riseByLocation('Northern_Hemisphere'));
+    let southernRise = yearDim.group().reduceSum(riseByLocation('Southern_Hemisphere'));
+    let tropicsRise = yearDim.group().reduceSum(riseByLocation('Tropics'));
 
     tempRiseChart
         .width(1000)
@@ -148,16 +148,16 @@ d3.csv("data/global-temperature-rise.csv", function(error, tempData) {
 
 d3.csv('data/annual-share-of-co2-emissions.csv', function(error, co2ShareData) {
 
-    var co2ShareChart = dc.bubbleChart('#co2_emissions');
+    let co2ShareChart = dc.bubbleChart('#co2_emissions');
 
-    var ndx = crossfilter(co2ShareData);
+    let ndx = crossfilter(co2ShareData);
 
     countryDim = ndx.dimension(dc.pluck('Entity'));
     
-    var AFG = countryDim.top(1)[0].Entity;
-    var ZWE = countryDim.bottom(1)[0].Entity;
+    let AFG = countryDim.top(1)[0].Entity;
+    let ZWE = countryDim.bottom(1)[0].Entity;
 
-    var shareOfGlobalCo2 = countryDim.group().reduceSum(dc.pluck('Global_CO2_emissions_share'));
+    let shareOfGlobalCo2 = countryDim.group().reduceSum(dc.pluck('Global_CO2_emissions_share'));
     
     co2ShareChart
         .width(1000)
@@ -167,7 +167,7 @@ d3.csv('data/annual-share-of-co2-emissions.csv', function(error, co2ShareData) {
         .group(shareOfGlobalCo2)
         .x(d3.scale.ordinal().domain(AFG,ZWE))
         .y(d3.scale.linear().domain([1,100]))
-        .r(d3.scale.linear().domain(0,100))
+        .r(d3.scale.linear().domain([0,100]))
         .renderLabel(true)
         .renderHorizontalGridLines(true)
         .maxBubbleRelativeSize(0.8)
@@ -181,16 +181,16 @@ d3.csv('data/annual-share-of-co2-emissions.csv', function(error, co2ShareData) {
 
 d3.csv('data/global-co2-concentration-ppm.csv', function(error, co2AtmosphereData) {
 
-    var atmosphericCO2chart = dc.barChart('#co2_ppm_chart');
+    let atmosphericCO2chart = dc.barChart('#co2_ppm_chart');
 
-    var ndx = crossfilter(co2AtmosphereData);
+    let ndx = crossfilter(co2AtmosphereData);
 
     yearDim = ndx.dimension(dc.pluck('Year'));
 
-    var minDate = yearDim.bottom(1)[0].Year;
-    var maxDate = yearDim.top(1)[0].Year;
+    let minDate = yearDim.bottom(1)[0].Year;
+    let maxDate = yearDim.top(1)[0].Year;
 
-    var co2ppm = yearDim.group().reduceSum(dc.pluck('CO2_concentration_ppm'));
+    let co2ppm = yearDim.group().reduceSum(dc.pluck('CO2_concentration_ppm'));
 
     atmosphericCO2chart
         .width(1000)
