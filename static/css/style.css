@@ -6,11 +6,16 @@
     background-repeat: no-repeat;
 }
 
-.jumbotron-text, .divider-text {
-    background-color: rgba(0,0,0,0.3);
+.jumbotron-text,
+.divider-text {
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
-.countdown{
+.warning-message {
+    padding-top: 25%;
+}
+
+.countdown {
     font-size: 25px;
 }
 
@@ -38,8 +43,39 @@ path {
     background-repeat: no-repeat;
 }
 
-.hope{
+.hope {
     line-height: 100px;
     text-align: center;
     vertical-align: middle;
 }
+
+
+/*----------------- MEDIA QUERIES -----------------*/
+
+/* ------------ SMALL DEVICES ----------*/
+
+@media screen and (min-width: 350px) and (max-width: 700px) {
+    .jumbotron-text,
+    .jumbotron-button {
+        font-size: 18px;
+    }
+    
+    .jumbotron-text {
+        line-height: 30px;
+    }
+}
+
+
+/* ------------ MEDIUM DEVICES ----------*/
+
+/*@media screen and (min-width:751px) and (max-width:1025px) {}
+
+
+/* ------------ LARGE DEVICES ----------*/
+
+/*@media only screen and (min-width: 1025px) {}
+
+
+/* ------------ EXTRA LARGE DEVICES ----------*/
+
+/*@media only screen and (min-width: 1200px) {}
