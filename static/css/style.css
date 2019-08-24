@@ -67,13 +67,20 @@ path {
 /* ------------ SMALL DEVICES ----------*/
 
 @media screen and (min-width: 350px) and (max-width: 700px) {
+    
+    .text-and-button {
+        padding-top: 85%;
+    }
+    
     .jumbotron-text,
     .jumbotron-button {
         font-size: 18px;
     }
     
-    .jumbotron-text {
+    .jumbotron-text,
+    .divider-text{
         line-height: 30px;
+        width: 90%;
     }
 }
 
