@@ -8,11 +8,23 @@
 
 .jumbotron-text,
 .divider-text {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 50%;
+    margin: 10px auto;
+    font-size: 32px;
+    text-shadow: 1px 1px #000;
+    border-radius: 5px;
 }
 
-.warning-message {
+.text-and-button {
     padding-top: 25%;
+}
+
+.btn-danger,
+.btn-success {
+    font-size: 24px;
+    margin-top: 20px;
+    text-shadow: 1px 1px #000;
 }
 
 .countdown {
