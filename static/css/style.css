@@ -6,8 +6,8 @@
     background-repeat: no-repeat;
 }
 
-h2 {
-    text-shadow: 1px 1px #000;
+.jumbotron-text, .divider-text {
+    background-color: rgba(0,0,0,0.3);
 }
 
 .countdown{
