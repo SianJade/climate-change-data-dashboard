@@ -48,8 +48,11 @@ path {
     box-shadow: 1px 1px 5px 1px #000;
 }
 
-.sea-level-container {
-    padding-top: 5%;
+.cause-container,
+.effect-container {
+    width: 75%;
+    margin: 25px auto;
+    font-size: 16px;
 }
 
 .page-divider {
@@ -85,7 +88,9 @@ path {
         width: 90%;
     }
     
-    figcaption {
+    figcaption,
+    .cause-container,
+    .effect-container{
     width: 90%;
     margin: 20px auto;
     font-size: 14px;
