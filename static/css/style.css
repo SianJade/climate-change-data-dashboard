@@ -31,6 +31,12 @@ header {
     font-size: 25px;
 }
 
+figcaption {
+    width: 50%;
+    margin: 25px auto;
+    font-size: 16px;
+}
+
 path {
     stroke-width: 1px;
     fill: none;
@@ -78,6 +84,13 @@ path {
         line-height: 30px;
         width: 90%;
     }
+    
+    figcaption {
+    width: 90%;
+    margin: 20px auto;
+    font-size: 14px;
+}
+
 }
 
 
