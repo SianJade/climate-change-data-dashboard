@@ -6,18 +6,19 @@ queue()
     .defer(d3.csv, 'data/global-deforestation.csv')
     .await(makeGraphs);
     
-    
-function makeGraphs(error,seaData,tempData,co2ShareData,co2AtmosphereData){
-    
-    buildSeaGraph(seaData);
-    buildTempGraph(tempData);
-    buildCo2ShareGraph(co2ShareData);
-    buildCo2PpmGraph(co2AtmosphereData);
-    
-    
-    dc.renderAll();
-}
+function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData){
+let sea_ndx = crossfilter(seaData);
+let temp_ndx = crossfilter(tempData);
+let co2_share_ndx = crossfilter(co2ShareData);
+let atmosphere_ndx = crossfilter(co2AtmosphereData);
 
+buildSeaGraph(sea_ndx);
+buildTempGraph(temp_ndx);
+buildCo2ShareGraph(co2_share_ndx);
+buildCo2AtmosphereGraph(atmosphere_ndx);
+
+dc.renderAll();
+}
 //countdown
 
 function countdown() {
@@ -62,13 +63,11 @@ function countdown() {
 
 //sea level rise line graph//
 
-function buildSeaGraph(error, seaData) {
-    
-    let ndx = crossfilter(seaData);
+function buildSeaGraph(sea_ndx) {
     
     let seaLevelRiseChart = dc.lineChart('#sea_level_rise');
 
-    let yearDim = ndx.dimension(dc.pluck('Year'));
+    let yearDim = sea_ndx.dimension(dc.pluck('Year'));
 
     let minDate = yearDim.bottom(1)[0].Year;
     let maxDate = yearDim.top(1)[0].Year;
@@ -99,13 +98,11 @@ function buildSeaGraph(error, seaData) {
 
 //global temperature rise chart//
 
-function buildTempGraph(error, tempData) {
+function buildTempGraph(temp_ndx) {
 
     let tempRiseChart = dc.compositeChart('#temperature_rise');
 
-    let ndx = crossfilter(tempData)
-
-    yearDim = ndx.dimension(dc.pluck('Year'));
+    yearDim = temp_ndx.dimension(dc.pluck('Year'));
 
     let minDate = yearDim.bottom(1)[0].Year;
     let maxDate = yearDim.top(1)[0].Year;
@@ -156,13 +153,11 @@ function buildTempGraph(error, tempData) {
 
 //share of global co2 emissions bubble chart
 
-function buildCo2ShareGraph(error, co2ShareData) {
+function buildCo2ShareGraph(co2_share_ndx) {
 
     let co2ShareChart = dc.bubbleChart('#co2_emissions');
 
-    let ndx = crossfilter(co2ShareData);
-
-    countryDim = ndx.dimension(dc.pluck('Entity'));
+    countryDim = co2_share_ndx.dimension(dc.pluck('Entity'));
 
     let AFG = countryDim.top(1)[0].Entity;
     let ZWE = countryDim.bottom(1)[0].Entity;
@@ -188,13 +183,11 @@ function buildCo2ShareGraph(error, co2ShareData) {
 //Atmospheric co2 concentration parts per million (ppm) chart
 
 
-function buildCo2PpmGraph(error, co2AtmosphereData) {
+function buildCo2PpmGraph(atmosphere_ndx) {
 
     let atmosphericCO2chart = dc.barChart('#co2_ppm_chart');
 
-    let ndx = crossfilter(co2AtmosphereData);
-
-    yearDim = ndx.dimension(dc.pluck('Year'));
+    yearDim = atmosphere_ndx.dimension(dc.pluck('Year'));
 
     let minDate = yearDim.bottom(1)[0].Year;
     let maxDate = yearDim.top(1)[0].Year;
@@ -211,3 +204,5 @@ function buildCo2PpmGraph(error, co2AtmosphereData) {
         .dimension(yearDim)
         .group(co2ppm)
 }
+
+countdown(); 
