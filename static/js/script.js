@@ -18,6 +18,7 @@ buildCo2ShareGraph(co2_share_ndx);
 buildCo2AtmosphereGraph(atmosphere_ndx);
 
 dc.renderAll();
+
 }
 //countdown
 
@@ -60,13 +61,12 @@ function countdown() {
     setTimeout(countdown, 1000);
 }
 
+countdown();
 
 //sea level rise line graph//
 
 function buildSeaGraph(sea_ndx) {
     
-    let seaLevelRiseChart = dc.lineChart('#sea_level_rise');
-
     let yearDim = sea_ndx.dimension(dc.pluck('Year'));
 
     let minDate = yearDim.bottom(1)[0].Year;
@@ -76,7 +76,7 @@ function buildSeaGraph(sea_ndx) {
     let lowerErrorBound = yearDim.group().reduceSum(dc.pluck('Lower_Error_Bound'));
     let upperErrorBound = yearDim.group().reduceSum(dc.pluck('Upper_Error_Bound'));
 
-    seaLevelRiseChart
+    dc.lineChart('#sea_level_rise')
         .width(1000)
         .height(500)
         .margins({ top: 50, right: 50, bottom: 50, left: 50 })
@@ -100,8 +100,6 @@ function buildSeaGraph(sea_ndx) {
 
 function buildTempGraph(temp_ndx) {
 
-    let tempRiseChart = dc.compositeChart('#temperature_rise');
-
     yearDim = temp_ndx.dimension(dc.pluck('Year'));
 
     let minDate = yearDim.bottom(1)[0].Year;
@@ -123,7 +121,7 @@ function buildTempGraph(temp_ndx) {
     let southernRise = yearDim.group().reduceSum(riseByLocation('Southern_Hemisphere'));
     let tropicsRise = yearDim.group().reduceSum(riseByLocation('Tropics'));
 
-    tempRiseChart
+    dc.compositeChart('#temperature_rise')
         .width(1000)
         .height(500)
         .margins({ top: 50, right: 50, bottom: 50, left: 50 })
@@ -155,8 +153,6 @@ function buildTempGraph(temp_ndx) {
 
 function buildCo2ShareGraph(co2_share_ndx) {
 
-    let co2ShareChart = dc.bubbleChart('#co2_emissions');
-
     countryDim = co2_share_ndx.dimension(dc.pluck('Entity'));
 
     let AFG = countryDim.top(1)[0].Entity;
@@ -164,7 +160,7 @@ function buildCo2ShareGraph(co2_share_ndx) {
 
     let shareOfGlobalCo2 = countryDim.group().reduceSum(dc.pluck('Global_CO2_emissions_share'));
 
-    co2ShareChart
+    dc.bubbleChart('#co2_emissions')
         .width(1000)
         .height(500)
         .margins({ top: 50, right: 50, bottom: 50, left: 50 })
@@ -185,8 +181,6 @@ function buildCo2ShareGraph(co2_share_ndx) {
 
 function buildCo2PpmGraph(atmosphere_ndx) {
 
-    let atmosphericCO2chart = dc.barChart('#co2_ppm_chart');
-
     yearDim = atmosphere_ndx.dimension(dc.pluck('Year'));
 
     let minDate = yearDim.bottom(1)[0].Year;
@@ -194,7 +188,7 @@ function buildCo2PpmGraph(atmosphere_ndx) {
 
     let co2ppm = yearDim.group().reduceSum(dc.pluck('CO2_concentration_ppm'));
 
-    atmosphericCO2chart
+    dc.barChart('#co2_ppm_chart')
         .width(1000)
         .height(500)
         .x(d3.scale.linear().domain([minDate, maxDate]))
@@ -204,5 +198,3 @@ function buildCo2PpmGraph(atmosphere_ndx) {
         .dimension(yearDim)
         .group(co2ppm)
 }
-
-countdown(); 
