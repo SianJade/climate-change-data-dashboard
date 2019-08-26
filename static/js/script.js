@@ -1,6 +1,22 @@
 queue()
     .defer(d3.csv, 'data/epa-sea-level.csv')
-    .await(countdown);
+    .defer(d3.csv, 'data/global-temperature-rise.csv')
+    .defer(d3.csv, 'data/annual-share-of-co2-emissions.csv')
+    .defer(d3.csv, 'data/global-co2-concentration.csv')
+    .defer(d3.csv, 'data/global-deforestation.csv')
+    .await(makeGraphs);
+    
+    
+function makeGraphs(error,seaData,tempData,co2ShareData,co2AtmosphereData){
+    
+    buildSeaGraph(seaData);
+    buildTempGraph(tempData);
+    buildCo2ShareGraph(co2ShareData);
+    buildCo2PpmGraph(co2AtmosphereData);
+    
+    
+    dc.renderAll();
+}
 
 //countdown
 
@@ -44,15 +60,13 @@ function countdown() {
 }
 
 
-
-
 //sea level rise line graph//
 
-d3.csv("data/epa-sea-level.csv", function(error, seaData) {
+function buildSeaGraph(error, seaData) {
+    
+    let ndx = crossfilter(seaData);
     
     let seaLevelRiseChart = dc.lineChart('#sea_level_rise');
-
-    let ndx = crossfilter(seaData);
 
     let yearDim = ndx.dimension(dc.pluck('Year'));
 
@@ -78,16 +92,15 @@ d3.csv("data/epa-sea-level.csv", function(error, seaData) {
         .x(d3.scale.linear().domain([minDate, maxDate]))
         .yAxisLabel("Global Sea Level Rise (mm)")
         .xAxisLabel("Year")
-        .render();
-});
+};
 
 
 
 
 //global temperature rise chart//
 
-d3.csv("data/global-temperature-rise.csv", function(error, tempData) {
-    
+function buildTempGraph(error, tempData) {
+
     let tempRiseChart = dc.compositeChart('#temperature_rise');
 
     let ndx = crossfilter(tempData)
@@ -138,48 +151,44 @@ d3.csv("data/global-temperature-rise.csv", function(error, tempData) {
             .colors('yellow')
             .group(tropicsRise, 'Tropics average temperature rise')
         ])
-        .render();
-    dc.renderAll();
-});
-
+}
 
 
 //share of global co2 emissions bubble chart
 
-d3.csv('data/annual-share-of-co2-emissions.csv', function(error, co2ShareData) {
+function buildCo2ShareGraph(error, co2ShareData) {
 
     let co2ShareChart = dc.bubbleChart('#co2_emissions');
 
     let ndx = crossfilter(co2ShareData);
 
     countryDim = ndx.dimension(dc.pluck('Entity'));
-    
+
     let AFG = countryDim.top(1)[0].Entity;
     let ZWE = countryDim.bottom(1)[0].Entity;
 
     let shareOfGlobalCo2 = countryDim.group().reduceSum(dc.pluck('Global_CO2_emissions_share'));
-    
+
     co2ShareChart
         .width(1000)
         .height(500)
         .margins({ top: 50, right: 50, bottom: 50, left: 50 })
         .dimension(countryDim)
         .group(shareOfGlobalCo2)
-        .x(d3.scale.ordinal().domain(AFG,ZWE))
-        .y(d3.scale.linear().domain([1,100]))
-        .r(d3.scale.linear().domain([0,100]))
+        .x(d3.scale.ordinal().domain(AFG, ZWE))
+        .y(d3.scale.linear().domain([1, 100]))
+        .r(d3.scale.linear().domain([0, 100]))
         .renderLabel(true)
         .renderHorizontalGridLines(true)
         .maxBubbleRelativeSize(0.8)
-        .render();
-});
+}
 
 
 
 //Atmospheric co2 concentration parts per million (ppm) chart
 
 
-d3.csv('data/global-co2-concentration-ppm.csv', function(error, co2AtmosphereData) {
+function buildCo2PpmGraph(error, co2AtmosphereData) {
 
     let atmosphericCO2chart = dc.barChart('#co2_ppm_chart');
 
@@ -201,5 +210,4 @@ d3.csv('data/global-co2-concentration-ppm.csv', function(error, co2AtmosphereDat
         .xAxisLabel("Year")
         .dimension(yearDim)
         .group(co2ppm)
-        .render();
-});
+}
