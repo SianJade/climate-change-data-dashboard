@@ -2,7 +2,7 @@ queue()
     .defer(d3.csv, 'data/epa-sea-level.csv')
     .defer(d3.csv, 'data/global-temperature-rise.csv')
     .defer(d3.csv, 'data/annual-share-of-co2-emissions.csv')
-    .defer(d3.csv, 'data/global-co2-concentration.csv')
+    .defer(d3.csv, 'data/global-co2-concentration-ppm.csv')
     .defer(d3.csv, 'data/global-deforestation.csv')
     .await(makeGraphs);
     
@@ -15,11 +15,13 @@ let atmosphere_ndx = crossfilter(co2AtmosphereData);
 buildSeaGraph(sea_ndx);
 buildTempGraph(temp_ndx);
 buildCo2ShareGraph(co2_share_ndx);
-buildCo2AtmosphereGraph(atmosphere_ndx);
+buildCo2PpmGraph(atmosphere_ndx);
 
 dc.renderAll();
 
 }
+
+console.log(makeGraphs);
 //countdown
 
 function countdown() {
@@ -97,6 +99,7 @@ function buildSeaGraph(sea_ndx) {
 
 
 //global temperature rise chart//
+let tempRiseChart = dc.compositeChart('#temperature_rise')
 
 function buildTempGraph(temp_ndx) {
 
@@ -121,7 +124,7 @@ function buildTempGraph(temp_ndx) {
     let southernRise = yearDim.group().reduceSum(riseByLocation('Southern_Hemisphere'));
     let tropicsRise = yearDim.group().reduceSum(riseByLocation('Tropics'));
 
-    dc.compositeChart('#temperature_rise')
+    tempRiseChart
         .width(1000)
         .height(500)
         .margins({ top: 50, right: 50, bottom: 50, left: 50 })
