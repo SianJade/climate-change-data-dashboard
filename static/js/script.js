@@ -16,12 +16,11 @@ buildSeaGraph(sea_ndx);
 buildTempGraph(temp_ndx);
 buildCo2ShareGraph(co2_share_ndx);
 buildCo2PpmGraph(atmosphere_ndx);
-
+showYearSelector(co2_share_ndx);
 dc.renderAll();
 
 }
 
-console.log(makeGraphs);
 //countdown
 
 function countdown() {
@@ -151,6 +150,17 @@ function buildTempGraph(temp_ndx) {
         ])
 }
 
+
+//year selector for co2 share graph
+
+function showYearSelector(co2_share_ndx){
+    dim = co2_share_ndx.dimension(dc.pluck('Year'));
+    group = dim.group();
+    
+    dc.selectMenu('#year_selector')
+        .dimension(dim)
+        .group(group);
+}
 
 //share of global co2 emissions bubble chart
 
