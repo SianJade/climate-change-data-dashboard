@@ -6,17 +6,20 @@ queue()
     .defer(d3.csv, 'data/global-deforestation.csv')
     .await(makeGraphs);
     
-function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData){
+function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData, deforestationData){
 let sea_ndx = crossfilter(seaData);
 let temp_ndx = crossfilter(tempData);
 let co2_share_ndx = crossfilter(co2ShareData);
 let atmosphere_ndx = crossfilter(co2AtmosphereData);
+let deforestation_ndx = crossfilter(deforestationData);
 
 buildSeaGraph(sea_ndx);
 buildTempGraph(temp_ndx);
 buildCo2ShareGraph(co2_share_ndx);
 buildCo2PpmGraph(atmosphere_ndx);
+buildDeforestationGraph(deforestation_ndx);
 showYearSelector(co2_share_ndx);
+showCountrySelector(deforestation_ndx);
 
 dc.renderAll();
 
@@ -211,4 +214,14 @@ function buildCo2PpmGraph(atmosphere_ndx) {
         .xAxisLabel("Year")
         .dimension(yearDim)
         .group(co2ppm)
+}
+
+
+function showCountrySelector(deforestation_ndx){
+    dim = deforestation_ndx.dimension(dc.pluck('Country_Name'));
+    group = dim.group();
+    
+    dc.selectMenu('#country_selector')
+        .dimension(dim)
+        .group(group);
 }
