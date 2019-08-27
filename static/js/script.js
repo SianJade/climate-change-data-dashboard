@@ -17,6 +17,7 @@ buildTempGraph(temp_ndx);
 buildCo2ShareGraph(co2_share_ndx);
 buildCo2PpmGraph(atmosphere_ndx);
 showYearSelector(co2_share_ndx);
+
 dc.renderAll();
 
 }
@@ -179,7 +180,7 @@ function buildCo2ShareGraph(co2_share_ndx) {
         .margins({ top: 50, right: 50, bottom: 50, left: 50 })
         .dimension(countryDim)
         .group(shareOfGlobalCo2)
-        .x(d3.scale.ordinal().domain(AFG, ZWE))
+        .x(d3.scale.ordinal().domain([countryDim.top(1)[0], countryDim.bottom(1)[0]]))
         .y(d3.scale.linear().domain([1, 100]))
         .r(d3.scale.linear().domain([0, 100]))
         .renderLabel(true)
