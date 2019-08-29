@@ -19,7 +19,6 @@ buildCo2ShareGraph(co2_share_ndx);
 buildCo2PpmGraph(atmosphere_ndx);
 buildDeforestationGraph(deforestation_ndx);
 showCountrySelector(co2_share_ndx);
-showCountrySelector(deforestation_ndx);
 
 dc.renderAll();
 
@@ -157,60 +156,57 @@ function buildTempGraph(temp_ndx) {
 
 //year selector for co2 share graph
 
-function showCountrySelector(co2_share_ndx){
-    dim = co2_share_ndx.dimension(dc.pluck('Entity'));
-    group = dim.group();
+// function showCountrySelector(co2_share_ndx){
+//     dim = co2_share_ndx.dimension(dc.pluck('Entity'));
+//     group = dim.group();
     
-    dc.selectMenu('#country_selector')
-        .dimension(dim)
-        .group(group);
-}
+//     dc.selectMenu('#country_selector')
+//         .dimension(dim)
+//         .group(group);
+// }
 
 //share of global co2 emissions bubble chart
 
 function buildCo2ShareGraph(co2_share_ndx) {
 
-    let countryDim = co2_share_ndx.dimension(dc.pluck('Entity'));
+
+    let countryDim = co2_share_ndx.dimension(dc.pluck('Entity'));  
     
+    let minEmssions = countryDim.bottom(1)[0].Global_CO2_emissions_share;
+    let maxEmssions = countryDim.top(1)[0].Global_CO2_emissions_share;   
+    console.log(minEmssions,maxEmssions);
     let totalEmissionsByCountry = countryDim.group().reduce(
-        
+    
         //add a data entry
-        function (p,v) {
-            p.count++;
-            p.total += v.Global_CO2_emissions_share;
-            p.average = p.total / p.count;
-            return p;
-        },
-        
-        //remove a data entry
-           function (p,v) {
-            p.count --;
-            if (p.count == 0){
-                p.total = 0;
-                p.average = 0;
-            }else{
-                p.total -= v.Global_CO2_emissions_share;
+            function(p, v) {
+                p.count++;
+                p.total += v.Global_CO2_emissions_share;
                 p.average = p.total / p.count;
+                return p;
+            },
+            // Remove a Fact
+            function(p, v) {
+                p.count--;
+                if (p.count == 0) {
+                    p.total = 0;
+                    p.average = 0;
+                } else {
+                    p.total -= v.Global_CO2_emissions_share;
+                    p.average = p.total / p.count;
+                }
+                return p;
+            },
+            // Initialise the Reducer
+            function () {
+                return { count: 0, total: 0, average: 0};
             }
-            return p;
-        },
-        
-        //initialise the reducer
-        function () {
-            return {count:0, total:0, average:0};
-        }
-        );
+            
+            
+            );
         
         console.log(totalEmissionsByCountry.all());
 
-    dc.barChart('#co2_emissions')
-    .width(1000)
-    .height(500)
-    .margins({ top: 50, right: 50, bottom: 50, left: 50 })
-    .dimension(countryDim)
-    .group(totalEmissionsByCountry)
-    .x(d3.scale.ordinal())
-    .xUnits(dc.units.ordinal);
+
 
     // dc.bubbleChart('#co2_emissions')
     //     .width(1000)
