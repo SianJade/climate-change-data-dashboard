@@ -9,7 +9,11 @@ queue()
 
 
 function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData, deforestationData, reforestationData) {
-    
+
+    co2ShareData.forEach(function(d) {
+        d.Global_CO2_emissions_share = parseFloat(d.Global_CO2_emissions_share);
+    });
+
     let sea_ndx = crossfilter(seaData);
     let temp_ndx = crossfilter(tempData);
     let co2_share_ndx = crossfilter(co2ShareData);
