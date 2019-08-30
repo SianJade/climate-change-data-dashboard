@@ -4,26 +4,30 @@ queue()
     .defer(d3.csv, 'data/annual-share-of-co2-emissions.csv')
     .defer(d3.csv, 'data/global-co2-concentration-ppm.csv')
     .defer(d3.csv, 'data/global-deforestation.csv')
+    .defer(d3.csv, 'data/uk-forest-maintenance.csv')
     .await(makeGraphs);
+
+
+function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData, deforestationData, reforestationData) {
     
-function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData, deforestationData){
-let sea_ndx = crossfilter(seaData);
-let temp_ndx = crossfilter(tempData);
-let co2_share_ndx = crossfilter(co2ShareData);
-let atmosphere_ndx = crossfilter(co2AtmosphereData);
-let deforestation_ndx = crossfilter(deforestationData);
+    let sea_ndx = crossfilter(seaData);
+    let temp_ndx = crossfilter(tempData);
+    let co2_share_ndx = crossfilter(co2ShareData);
+    let atmosphere_ndx = crossfilter(co2AtmosphereData);
+    let deforestation_ndx = crossfilter(deforestationData);
+    let reforestation_ndx = crossfilter(reforestationData);
 
-buildSeaGraph(sea_ndx);
-buildTempGraph(temp_ndx);
-buildCo2ShareGraph(co2_share_ndx);
-buildCo2PpmGraph(atmosphere_ndx);
-buildDeforestationGraph(deforestation_ndx);
-showCountrySelector(co2_share_ndx);
+    buildSeaGraph(sea_ndx);
+    buildTempGraph(temp_ndx);
+    buildCo2ShareGraph(co2_share_ndx);
+    buildCo2PpmGraph(atmosphere_ndx);
+    buildDeforestationGraph(deforestation_ndx);
+    buildReforestationGraph(reforestation_ndx);
+    // showYearSelector(reforestation_ndx);
 
-dc.renderAll();
+    dc.renderAll();
 
 }
-
 //countdown
 
 function countdown() {
@@ -70,7 +74,7 @@ countdown();
 //sea level rise line graph//
 
 function buildSeaGraph(sea_ndx) {
-    
+
     let yearDim = sea_ndx.dimension(dc.pluck('Year'));
 
     let minDate = yearDim.bottom(1)[0].Year;
@@ -154,58 +158,43 @@ function buildTempGraph(temp_ndx) {
 }
 
 
-//year selector for co2 share graph
-
-// function showCountrySelector(co2_share_ndx){
-//     dim = co2_share_ndx.dimension(dc.pluck('Entity'));
-//     group = dim.group();
-    
-//     dc.selectMenu('#country_selector')
-//         .dimension(dim)
-//         .group(group);
-// }
-
 //share of global co2 emissions bubble chart
 
 function buildCo2ShareGraph(co2_share_ndx) {
-
-
-    let countryDim = co2_share_ndx.dimension(dc.pluck('Entity'));  
     
-    let minEmssions = countryDim.bottom(1)[0].Global_CO2_emissions_share;
-    let maxEmssions = countryDim.top(1)[0].Global_CO2_emissions_share;   
-    console.log(minEmssions,maxEmssions);
+    let countryDim = co2_share_ndx.dimension(dc.pluck('Entity'));
+
     let totalEmissionsByCountry = countryDim.group().reduce(
-    
-        //add a data entry
-            function(p, v) {
-                p.count++;
-                p.total += v.Global_CO2_emissions_share;
-                p.average = p.total / p.count;
-                return p;
-            },
-            // Remove a Fact
-            function(p, v) {
-                p.count--;
-                if (p.count == 0) {
-                    p.total = 0;
-                    p.average = 0;
-                } else {
-                    p.total -= v.Global_CO2_emissions_share;
-                    p.average = p.total / p.count;
-                }
-                return p;
-            },
-            // Initialise the Reducer
-            function () {
-                return { count: 0, total: 0, average: 0};
-            }
-            
-            
-            );
-        
-        console.log(totalEmissionsByCountry.all());
 
+        //add a data entry
+        function(p, v) {
+            p.count++;
+            p.total += v.Global_CO2_emissions_share;
+            p.average = p.total / p.count;
+            return p;
+        },
+        // Remove a Fact
+        function(p, v) {
+            p.count--;
+            if (p.count == 0) {
+                p.total = 0;
+                p.average = 0;
+            }
+            else {
+                p.total -= v.Global_CO2_emissions_share;
+                p.average = p.total / p.count;
+            }
+            return p;
+        },
+        // Initialise the Reducer
+        function() {
+            return { count: 0, total: 0, average: 0 };
+        }
+
+
+    );
+
+    console.log(totalEmissionsByCountry.all());
 
 
     // dc.bubbleChart('#co2_emissions')
@@ -213,8 +202,8 @@ function buildCo2ShareGraph(co2_share_ndx) {
     //     .height(500)
     //     .margins({ top: 50, right: 50, bottom: 50, left: 50 })
     //     .dimension(countryDim)
-    //     .group(shareOfGlobalCo2)
-    //     .x(d3.scale.ordinal().domain([countryDim.top(1)[0], countryDim.bottom(1)[0]]))
+    //     .group(totalEmissionsByCountry)
+    //     .x(d3.scale.linear([0,100]))
     //     .y(d3.scale.linear().domain([1, 100]))
     //     .r(d3.scale.linear().domain([0, 100]))
     //     .renderLabel(true)
@@ -248,26 +237,26 @@ function buildCo2PpmGraph(atmosphere_ndx) {
 }
 
 
-function showCountrySelector(deforestation_ndx){
-    dim = deforestation_ndx.dimension(dc.pluck('Country_Name'));
-    group = dim.group();
-    
-    dc.selectMenu('#country_selector')
-        .dimension(dim)
-        .group(group);
-}
+// function showCountrySelector(deforestation_ndx){
+//     dim = deforestation_ndx.dimension(dc.pluck('Entity'));
+//     group = dim.group();
+
+//     dc.selectMenu('#country_selector')
+//         .dimension(dim)
+//         .group(group);
+// }
 
 //global deforestation chart
 
-function buildDeforestationGraph(deforestation_ndx){
-    
+function buildDeforestationGraph(deforestation_ndx) {
+
     yearDim = deforestation_ndx.dimension(dc.pluck('Year'));
-    
+
     let defaultGroup = yearDim.group().reduceSum(dc.pluck('World'));
-    
+
     let minDate = yearDim.bottom(1)[0].Year;
     let maxDate = yearDim.top(1)[0].Year;
-    
+
     dc.barChart('#global_deforestation_chart')
         .width(1000)
         .height(500)
@@ -278,4 +267,39 @@ function buildDeforestationGraph(deforestation_ndx){
         .dimension(yearDim)
         .group(defaultGroup)
         .yAxis().ticks(10);
+}
+
+// function showYearSelector(reforestation_ndx) {
+//     dim = reforestation_ndx.dimension(dc.pluck('Year'));
+//     group = dim.group();
+
+//     dc.selectMenu('#year_selector')
+//         .dimension(dim)
+//         .group(group);
+// }
+
+//reforestation chart
+
+function buildReforestationGraph(reforestation_ndx) {
+
+    let countryDim = reforestation_ndx.dimension(dc.pluck('Entity'));
+
+    let newConifers = countryDim.group().reduceSum(dc.pluck('new_planting_conifers'));
+    let newBroadleaves = countryDim.group().reduceSum(dc.pluck('new_planting_broadleaves'));
+    let restockConifers = countryDim.group().reduceSum(dc.pluck('restocking_conifers'));
+    let restockBroadleaves = countryDim.group().reduceSum(dc.pluck('restocking_broadleaves'));
+
+    dc.scatterPlot('#reforestation_chart')
+        .width(1000)
+        .height(500)
+        .x(d3.scale.linear().domain([0, 20]))
+        .y(d3.scale.linear().domain([0, 20]))
+        .brushOn(false)
+        .xAxisLabel('Broadleaves')
+        .yAxisLabel('Conifers')
+        .symbolSize(8)
+        .clipPadding(10)
+        .dimension(countryDim)
+        .group(newConifers);
+
 }
