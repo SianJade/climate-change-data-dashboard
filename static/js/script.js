@@ -165,7 +165,7 @@ function buildTempGraph(temp_ndx) {
 //share of global co2 emissions bubble chart
 
 function buildCo2ShareGraph(co2_share_ndx) {
-    
+
     let countryDim = co2_share_ndx.dimension(dc.pluck('Entity'));
 
     let totalEmissionsByCountry = countryDim.group().reduce(
@@ -175,6 +175,8 @@ function buildCo2ShareGraph(co2_share_ndx) {
             p.count++;
             p.total += v.Global_CO2_emissions_share;
             p.average = p.total / p.count;
+            if (p.min > v.Global_CO2_emissions_share) { p.min = v.Global_CO2_emissions_share }
+            if (p.max < v.Global_CO2_emissions_share) { p.max = v.Global_CO2_emissions_share }
             return p;
         },
         // Remove a Fact
@@ -187,16 +189,18 @@ function buildCo2ShareGraph(co2_share_ndx) {
             else {
                 p.total -= v.Global_CO2_emissions_share;
                 p.average = p.total / p.count;
+                if (p.min > v.Global_CO2_emissions_share) { p.min = v.Global_CO2_emissions_share }
+                if (p.max < v.Global_CO2_emissions_share) { p.max = v.Global_CO2_emissions_share }
             }
             return p;
         },
         // Initialise the Reducer
         function() {
-            return { count: 0, total: 0, average: 0 };
+            return { count: 0, total: 0, average: 0, min: 100, max: 0 };
         }
-
-
     );
+
+
 
     console.log(totalEmissionsByCountry.all());
 
@@ -205,7 +209,7 @@ function buildCo2ShareGraph(co2_share_ndx) {
     //     .width(1000)
     //     .height(500)
     //     .margins({ top: 50, right: 50, bottom: 50, left: 50 })
-    //     .dimension(countryDim)
+    //     .dimension(totalEmissionsByCountry)
     //     .group(totalEmissionsByCountry)
     //     .x(d3.scale.linear([0,100]))
     //     .y(d3.scale.linear().domain([1, 100]))
