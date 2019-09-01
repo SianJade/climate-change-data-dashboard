@@ -5,10 +5,12 @@ queue()
     .defer(d3.csv, 'data/global-co2-concentration-ppm.csv')
     .defer(d3.csv, 'data/global-deforestation.csv')
     .defer(d3.csv, 'data/uk-forest-maintenance.csv')
+    .defer(d3.csv, 'data/renewable-energy.csv')
     .await(makeGraphs);
 
 
-function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData, deforestationData, reforestationData) {
+function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData,
+    deforestationData, reforestationData, renewableEnergyData) {
 
     co2ShareData.forEach(function(d) {
         d.Global_CO2_emissions_share = parseFloat(d.Global_CO2_emissions_share);
@@ -20,6 +22,7 @@ function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData, d
     let atmosphere_ndx = crossfilter(co2AtmosphereData);
     let deforestation_ndx = crossfilter(deforestationData);
     let reforestation_ndx = crossfilter(reforestationData);
+    let renewable_ndx = crossfilter(renewableEnergyData);
 
     buildSeaGraph(sea_ndx);
     buildTempGraph(temp_ndx);
@@ -27,6 +30,7 @@ function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData, d
     buildCo2PpmGraph(atmosphere_ndx);
     buildDeforestationGraph(deforestation_ndx);
     buildReforestationGraph(reforestation_ndx);
+    buildRenewableEnergyGraph(renewable_ndx);
     // showYearSelector(reforestation_ndx);
 
     dc.renderAll();
@@ -237,6 +241,7 @@ function buildCo2PpmGraph(atmosphere_ndx) {
         .width(1000)
         .height(500)
         .x(d3.scale.linear().domain([minDate, maxDate]))
+        .y(d3.scale.linear().domain([300,420]))
         .brushOn(false)
         .yAxisLabel("Atmospheric CO2 concentration (parts per million (ppm))")
         .xAxisLabel("Year")
@@ -310,4 +315,43 @@ function buildReforestationGraph(reforestation_ndx) {
         .dimension(countryDim)
         .group(newConifers);
 
+}
+
+//renewable energy chart
+
+function buildRenewableEnergyGraph(renewable_ndx) {
+    
+    let renewableEnergyChart = dc.barChart('#renewable_chart');
+
+    yearDim = renewable_ndx.dimension(dc.pluck('Year'));
+
+    let minDate = yearDim.bottom(1)[0].Year;
+    let maxDate = yearDim.top(1)[0].Year;
+
+    let hydropower = yearDim.group().reduceSum(dc.pluck('Hydropower'));
+    let marineEnergy = yearDim.group().reduceSum(dc.pluck('Marine_energy'));
+    let windEnergy = yearDim.group().reduceSum(dc.pluck('Wind_energy'));
+    let solarEnergy = yearDim.group().reduceSum(dc.pluck('Solar_energy'));
+    let bioEnergy = yearDim.group().reduceSum(dc.pluck('Bioenergy'));
+    let geothermalEnergy = yearDim.group().reduceSum(dc.pluck('Geothermal_energy'));
+
+
+
+    renewableEnergyChart
+        .width(1000)
+        .height(500)
+        .margins({ top: 50, right: 50, bottom: 50, left: 50 })
+        .legend(dc.legend().x(650).y(50).itemHeight(10).gap(10))
+        .brushOn(false)
+        .transitionDuration(500)
+        .x(d3.scale.linear().domain([minDate, maxDate]))
+        .yAxisLabel("Worldwide Renewable Energy Production (Gwh)")
+        .xAxisLabel("Year")
+        .dimension(yearDim)
+        .group(hydropower, 'Hydropower')
+        .stack(marineEnergy, 'Marine Energy')
+        .stack(windEnergy, 'Wind Energy')
+        .stack(solarEnergy, 'Solar Energy')
+        .stack(bioEnergy, 'Bioenergy')
+        .stack(geothermalEnergy, 'Geothermal Energy');
 }
