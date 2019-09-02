@@ -254,38 +254,6 @@ function buildCo2PpmGraph(atmosphere_ndx) {
 }
 
 
-// function showCountrySelector(deforestation_ndx){
-//     dim = deforestation_ndx.dimension(dc.pluck('Entity'));
-//     group = dim.group();
-
-//     dc.selectMenu('#country_selector')
-//         .dimension(dim)
-//         .group(group);
-// }
-
-//global deforestation chart
-
-function buildDeforestationGraph(deforestation_ndx) {
-
-    yearDim = deforestation_ndx.dimension(dc.pluck('Year'));
-
-    let defaultGroup = yearDim.group().reduceSum(dc.pluck('World'));
-
-    let minDate = yearDim.bottom(1)[0].Year;
-    let maxDate = yearDim.top(1)[0].Year;
-
-    dc.barChart('#global_deforestation_chart')
-        .width(1000)
-        .height(500)
-        .x(d3.scale.linear().domain([minDate, maxDate]))
-        .brushOn(false)
-        .yAxisLabel("Tree coverage")
-        .xAxisLabel("Year")
-        .dimension(yearDim)
-        .group(defaultGroup)
-        .yAxis().ticks(10);
-}
-
 // function showYearSelector(reforestation_ndx) {
 //     dim = reforestation_ndx.dimension(dc.pluck('Year'));
 //     group = dim.group();
@@ -420,5 +388,7 @@ function buildRenewableEnergyContinentGraph(continent_ndx) {
               dc.lineChart(continentChart)
             .colors('blue')
             .group(southAmerica, 'South America')
-        ])
+        ]);
 }
+
+//reduce
