@@ -40,6 +40,22 @@ function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData,
 
 }
 
+//see more/less button
+function seeMore() {
+    let dots = document.getElementById('dots');
+    let more = document.getElementById('more');
+    let button = document.getElementById('see_more_button');
+    
+    if (dots.style.display === 'none'){
+        dots.style.display = 'inline';
+        button.innerHTML = 'See more';
+        more.style.display = 'none';
+    }else{
+        dots.style.display = 'none';
+        button.innerHTML = 'See less';
+        more.style.display = 'inline';
+    }
+}
 
 //countdown
 
