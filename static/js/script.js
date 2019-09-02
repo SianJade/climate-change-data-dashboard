@@ -346,22 +346,22 @@ function buildRenewableEnergyTypeGraph(renewable_ndx) {
 
 function buildRenewableEnergyContinentGraph(continent_ndx) {
 
-    let continentChart = dc.compositeChart('#continent_chart');
+    let continentChart = dc.lineChart('#continent_chart');
 
     let yearDim = continent_ndx.dimension(dc.pluck('Year'));
 
     let minDate = yearDim.bottom(1)[0].Year;
     let maxDate = yearDim.top(1)[0].Year;
 
-    let africa = yearDim.group().reduceSum('Africa');
-    let asia = yearDim.group().reduceSum('Asia');
-    let centralAmerica = yearDim.group().reduceSum('Central_America_and_Carib');
-    let eurasia = yearDim.group().reduceSum('Eurasia');
-    let europe = yearDim.group().reduceSum('Europe');
-    let middleEast = yearDim.group().reduceSum('Middle_East');
-    let northAmerica = yearDim.group().reduceSum('North_America');
-    let oceania = yearDim.group().reduceSum('Oceania');
-    let southAmerica = yearDim.group().reduceSum('South_America');
+    let africa = yearDim.group().reduceSum(dc.pluck('Africa'));
+    let asia = yearDim.group().reduceSum(dc.pluck('Asia'));
+    let centralAmerica = yearDim.group().reduceSum(dc.pluck('Central_America_and_Carib'));
+    let eurasia = yearDim.group().reduceSum(dc.pluck('Eurasia'));
+    let europe = yearDim.group().reduceSum(dc.pluck('Europe'));
+    let middleEast = yearDim.group().reduceSum(dc.pluck('Middle_East'));
+    let northAmerica = yearDim.group().reduceSum(dc.pluck('North_America'));
+    let oceania = yearDim.group().reduceSum(dc.pluck('Oceania'));
+    let southAmerica = yearDim.group().reduceSum(dc.pluck('South_America'));
 
     continentChart
         .width(1000)
@@ -374,34 +374,32 @@ function buildRenewableEnergyContinentGraph(continent_ndx) {
         .x(d3.scale.linear().domain([minDate, maxDate]))
         .yAxisLabel("Renewable Energy Production (GWh)")
         .xAxisLabel("Year")
-        .compose([
-            dc.lineChart(continentChart)
-            .colors('red')
-            .group(africa, 'Africa'),
-            dc.lineChart(continentChart)
-            .colors('green')
-            .group(asia, 'Asia'),
-            dc.lineChart(continentChart)
-            .colors('yellow')
-            .group(centralAmerica, 'Central America & Caribbean'),
-            dc.lineChart(continentChart)
-            .colors('red')
-            .group(eurasia, 'Eurasia'),
-            dc.lineChart(continentChart)
-            .colors('blue')
-            .group(europe, 'Europe'),
-            dc.lineChart(continentChart)
-            .colors('green')
-            .group(middleEast, 'Middle East'),
-            dc.lineChart(continentChart)
-            .colors('red')
-            .group(northAmerica, 'North America'),
-            dc.lineChart(continentChart)
-            .colors('yellow')
-            .group(oceania, 'Oceania'),
-            dc.lineChart(continentChart)
-            .colors('blue')
-            .group(southAmerica, 'South America')
-        ]);
-}
+        .group(africa, 'Africa')
+        .stack(asia, 'Asia')
+        .stack(centralAmerica, 'Central America & Caribbean')
+        .stack(eurasia, 'Eurasia')
+        .stack(europe, 'Europe')
+        .stack(middleEast, 'Middle East')
+        .stack(northAmerica, 'North America')
+        .stack(oceania, 'Oceania')
+        .stack(southAmerica, 'South America');
+        }
 
+// //minimising carbon footprint chart
+
+// function buildFootprintReductionGraph(footprint_ndx) {
+
+//     let footprintChart = dc.pieChart('#footprint_chart');
+
+//     let changeDim = footprint_ndx.dimension(dc.pluck('Change'));
+    
+//     let reduction = changeDim.group().reduceSum(dc.pluck('Co2_emissions_saved_per_year'));
+    
+//     footprintChart
+//     .height(1000)
+//     .radius(100)
+//     .transitionDuration(500)
+//     .dimension(changeDim)
+//     .group(reduction);
+
+// }
