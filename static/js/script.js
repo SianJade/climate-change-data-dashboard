@@ -24,7 +24,7 @@ function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData,
     let reforestation_ndx = crossfilter(reforestationData);
     let renewable_ndx = crossfilter(renewableEnergyData);
     let continent_ndx = crossfilter(continentalRenewableEnergyData);
-   // let footprint_ndx = crossfilter(reduceEmissionsData);
+    // let footprint_ndx = crossfilter(reduceEmissionsData);
 
     buildSeaGraph(sea_ndx);
     buildTempGraph(temp_ndx);
@@ -33,12 +33,14 @@ function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData,
     buildReforestationGraph(reforestation_ndx);
     buildRenewableEnergyTypeGraph(renewable_ndx);
     buildRenewableEnergyContinentGraph(continent_ndx);
-   // buildFootprintReductionGraph(footprint_ndx);
+    // buildFootprintReductionGraph(footprint_ndx);
     // showYearSelector(reforestation_ndx);
 
     dc.renderAll();
 
 }
+
+
 //countdown
 
 function countdown() {
@@ -86,6 +88,8 @@ countdown();
 
 function buildSeaGraph(sea_ndx) {
 
+    let seaLevelRiseChart = dc.compositeChart('#sea_level_rise');
+
     let yearDim = sea_ndx.dimension(dc.pluck('Year'));
 
     let minDate = yearDim.bottom(1)[0].Year;
@@ -95,21 +99,28 @@ function buildSeaGraph(sea_ndx) {
     let lowerErrorBound = yearDim.group().reduceSum(dc.pluck('Lower_Error_Bound'));
     let upperErrorBound = yearDim.group().reduceSum(dc.pluck('Upper_Error_Bound'));
 
-    dc.lineChart('#sea_level_rise')
+    seaLevelRiseChart
         .width(1000)
         .height(500)
         .margins({ top: 50, right: 50, bottom: 50, left: 50 })
         .dimension(yearDim)
-        .group(averageRise, 'CSIRO Adjusted Sea Level Rise')
-        .stack(lowerErrorBound, 'Lower Error Bound')
-        .stack(upperErrorBound, 'Upper Error Bound')
-        .xyTipsOn(true)
         .legend(dc.legend().x(750).y(50).itemHeight(10).gap(10))
         .brushOn(false)
         .transitionDuration(500)
         .x(d3.scale.linear().domain([minDate, maxDate]))
+        .xAxisLabel('Year')
         .yAxisLabel("Global Sea Level Rise (mm)")
-        .xAxisLabel("Year")
+        .compose([
+            dc.lineChart(seaLevelRiseChart)
+            .colors('red')
+            .group(lowerErrorBound, 'Lower Error Bound'),
+            dc.lineChart(seaLevelRiseChart)
+            .colors('green')
+            .group(averageRise, 'CSIRO Adjusted Sea Level Rise'),
+            dc.lineChart(seaLevelRiseChart)
+            .colors('blue')
+            .group(upperErrorBound, 'Upper Error Bound')
+        ]);
 }
 
 
@@ -266,7 +277,7 @@ function buildCo2PpmGraph(atmosphere_ndx) {
 //reforestation chart
 
 function buildReforestationGraph(reforestation_ndx) {
-    
+
     let reforestationChart = dc.compositeChart('#reforestation_chart')
 
     let countryDim = reforestation_ndx.dimension(dc.pluck('Entity'));
@@ -275,7 +286,7 @@ function buildReforestationGraph(reforestation_ndx) {
     let newBroadleaves = countryDim.group().reduceSum(dc.pluck('new_planting_broadleaves'));
     let restockConifers = countryDim.group().reduceSum(dc.pluck('restocking_conifers'));
     let restockBroadleaves = countryDim.group().reduceSum(dc.pluck('restocking_broadleaves'));
-    
+
     reforestationChart
         .width(1000)
         .height(500)
@@ -287,19 +298,19 @@ function buildReforestationGraph(reforestation_ndx) {
         .clipPadding(10)
         .dimension(countryDim)
         .compose([
-             dc.scatterPlot(reforestationChart)
-                .group(newConifers, "New planting Conifers")
-                .colors("blue"),
-                 dc.scatterPlot(reforestationChart)
-                .group(newBroadleaves, "New planting Broadleaves")
-                .colors("green"),
-                 dc.scatterPlot(reforestationChart)
-                .group(restockConifers, "Restocking Conifers")
-                .colors("red"),
-                 dc.scatterPlot(reforestationChart)
-                .group(restockBroadleaves, "Restocking Broadleaves")
-                .colors("yellow"),
-            ]);
+            dc.scatterPlot(reforestationChart)
+            .group(newConifers, "New planting Conifers")
+            .colors("blue"),
+            dc.scatterPlot(reforestationChart)
+            .group(newBroadleaves, "New planting Broadleaves")
+            .colors("green"),
+            dc.scatterPlot(reforestationChart)
+            .group(restockConifers, "Restocking Conifers")
+            .colors("red"),
+            dc.scatterPlot(reforestationChart)
+            .group(restockBroadleaves, "Restocking Broadleaves")
+            .colors("yellow"),
+        ]);
 
 }
 
@@ -371,6 +382,7 @@ function buildRenewableEnergyContinentGraph(continent_ndx) {
         .dimension(yearDim)
         .brushOn(false)
         .transitionDuration(500)
+        .renderArea(true)
         .x(d3.scale.linear().domain([minDate, maxDate]))
         .yAxisLabel("Renewable Energy Production (GWh)")
         .xAxisLabel("Year")
@@ -383,7 +395,7 @@ function buildRenewableEnergyContinentGraph(continent_ndx) {
         .stack(northAmerica, 'North America')
         .stack(oceania, 'Oceania')
         .stack(southAmerica, 'South America');
-        }
+}
 
 // //minimising carbon footprint chart
 
@@ -392,9 +404,9 @@ function buildRenewableEnergyContinentGraph(continent_ndx) {
 //     let footprintChart = dc.pieChart('#footprint_chart');
 
 //     let changeDim = footprint_ndx.dimension(dc.pluck('Change'));
-    
+
 //     let reduction = changeDim.group().reduceSum(dc.pluck('Co2_emissions_saved_per_year'));
-    
+
 //     footprintChart
 //     .height(1000)
 //     .radius(100)
