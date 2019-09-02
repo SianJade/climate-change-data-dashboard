@@ -37,7 +37,7 @@ figcaption {
     font-size: 16px;
 }
 
-path {
+.line-chart {
     stroke-width: 1px;
     fill: none;
 }
@@ -86,6 +86,10 @@ path {
     .divider-text{
         line-height: 30px;
         width: 90%;
+    }
+    
+    .graph-container{
+        overflow-x: scroll
     }
     
     figcaption,
