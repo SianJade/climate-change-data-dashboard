@@ -6,10 +6,12 @@ queue()
     .defer(d3.csv, 'data/uk-forest-maintenance.csv')
     .defer(d3.csv, 'data/renewable-energy.csv')
     .defer(d3.csv, 'data/renewable-continents.csv')
+    .defer(d3.csv, 'data/minimise-emissions.csv')
     .await(makeGraphs);
 
 
-function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData, reforestationData, renewableEnergyData, continentalRenewableEnergyData) {
+function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData,
+    reforestationData, renewableEnergyData, continentalRenewableEnergyData, reduceEmissionsData) {
 
     co2ShareData.forEach(function(d) {
         d.Global_CO2_emissions_share = parseFloat(d.Global_CO2_emissions_share);
@@ -22,6 +24,7 @@ function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData, r
     let reforestation_ndx = crossfilter(reforestationData);
     let renewable_ndx = crossfilter(renewableEnergyData);
     let continent_ndx = crossfilter(continentalRenewableEnergyData);
+   // let footprint_ndx = crossfilter(reduceEmissionsData);
 
     buildSeaGraph(sea_ndx);
     buildTempGraph(temp_ndx);
@@ -30,6 +33,7 @@ function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData, r
     buildReforestationGraph(reforestation_ndx);
     buildRenewableEnergyTypeGraph(renewable_ndx);
     buildRenewableEnergyContinentGraph(continent_ndx);
+   // buildFootprintReductionGraph(footprint_ndx);
     // showYearSelector(reforestation_ndx);
 
     dc.renderAll();
@@ -117,7 +121,7 @@ function buildTempGraph(temp_ndx) {
 
     let tempRiseChart = dc.compositeChart('#temperature_rise');
 
-    yearDim = temp_ndx.dimension(dc.pluck('Year'));
+    let yearDim = temp_ndx.dimension(dc.pluck('Year'));
 
     let minDate = yearDim.bottom(1)[0].Year;
     let maxDate = yearDim.top(1)[0].Year;
@@ -230,7 +234,7 @@ function buildCo2ShareGraph(co2_share_ndx) {
 
 function buildCo2PpmGraph(atmosphere_ndx) {
 
-    yearDim = atmosphere_ndx.dimension(dc.pluck('Year'));
+    let yearDim = atmosphere_ndx.dimension(dc.pluck('Year'));
 
     let minDate = yearDim.bottom(1)[0].Year;
     let maxDate = yearDim.top(1)[0].Year;
@@ -262,6 +266,8 @@ function buildCo2PpmGraph(atmosphere_ndx) {
 //reforestation chart
 
 function buildReforestationGraph(reforestation_ndx) {
+    
+    let reforestationChart = dc.compositeChart('#reforestation_chart')
 
     let countryDim = reforestation_ndx.dimension(dc.pluck('Entity'));
 
@@ -269,8 +275,8 @@ function buildReforestationGraph(reforestation_ndx) {
     let newBroadleaves = countryDim.group().reduceSum(dc.pluck('new_planting_broadleaves'));
     let restockConifers = countryDim.group().reduceSum(dc.pluck('restocking_conifers'));
     let restockBroadleaves = countryDim.group().reduceSum(dc.pluck('restocking_broadleaves'));
-
-    dc.scatterPlot('#reforestation_chart')
+    
+    reforestationChart
         .width(1000)
         .height(500)
         .x(d3.scale.linear().domain([0, 20]))
@@ -278,13 +284,22 @@ function buildReforestationGraph(reforestation_ndx) {
         .brushOn(false)
         .xAxisLabel('Broadleaves')
         .yAxisLabel('Conifers')
-        .symbolSize(8)
         .clipPadding(10)
         .dimension(countryDim)
-        .group(newConifers)
-        .group(newBroadleaves)
-        .group(restockBroadleaves)
-        .group(restockConifers);
+        .compose([
+             dc.scatterPlot(reforestationChart)
+                .group(newConifers, "New planting Conifers")
+                .colors("blue"),
+                 dc.scatterPlot(reforestationChart)
+                .group(newBroadleaves, "New planting Broadleaves")
+                .colors("green"),
+                 dc.scatterPlot(reforestationChart)
+                .group(restockConifers, "Restocking Conifers")
+                .colors("red"),
+                 dc.scatterPlot(reforestationChart)
+                .group(restockBroadleaves, "Restocking Broadleaves")
+                .colors("yellow"),
+            ]);
 
 }
 
@@ -294,7 +309,7 @@ function buildRenewableEnergyTypeGraph(renewable_ndx) {
 
     let renewableEnergyChart = dc.barChart('#renewable_chart');
 
-    yearDim = renewable_ndx.dimension(dc.pluck('Year'));
+    let yearDim = renewable_ndx.dimension(dc.pluck('Year'));
 
     let minDate = yearDim.bottom(1)[0].Year;
     let maxDate = yearDim.top(1)[0].Year;
@@ -333,7 +348,7 @@ function buildRenewableEnergyContinentGraph(continent_ndx) {
 
     let continentChart = dc.compositeChart('#continent_chart');
 
-    yearDim = continent_ndx.dimension(dc.pluck('Year'));
+    let yearDim = continent_ndx.dimension(dc.pluck('Year'));
 
     let minDate = yearDim.bottom(1)[0].Year;
     let maxDate = yearDim.top(1)[0].Year;
@@ -378,14 +393,15 @@ function buildRenewableEnergyContinentGraph(continent_ndx) {
             dc.lineChart(continentChart)
             .colors('green')
             .group(middleEast, 'Middle East'),
-              dc.lineChart(continentChart)
+            dc.lineChart(continentChart)
             .colors('red')
             .group(northAmerica, 'North America'),
-              dc.lineChart(continentChart)
+            dc.lineChart(continentChart)
             .colors('yellow')
             .group(oceania, 'Oceania'),
-              dc.lineChart(continentChart)
+            dc.lineChart(continentChart)
             .colors('blue')
             .group(southAmerica, 'South America')
         ]);
 }
+
