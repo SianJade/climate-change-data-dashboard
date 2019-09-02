@@ -37,15 +37,15 @@ figcaption {
     font-size: 16px;
 }
 
-.line-chart {
-    stroke-width: 1px;
-    fill: none;
-}
 
 .graph-container {
     background-color: #d3d3d3;
     border-radius: 7.5px;
     box-shadow: 1px 1px 5px 1px #000;
+}
+
+#more {
+    display: none;
 }
 
 .cause-container,
