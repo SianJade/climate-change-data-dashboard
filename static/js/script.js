@@ -6,11 +6,12 @@ queue()
     .defer(d3.csv, 'data/global-deforestation.csv')
     .defer(d3.csv, 'data/uk-forest-maintenance.csv')
     .defer(d3.csv, 'data/renewable-energy.csv')
+    .defer(d3.csv, 'data/renewable-continents.csv')
     .await(makeGraphs);
 
 
 function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData,
-    deforestationData, reforestationData, renewableEnergyData) {
+    deforestationData, reforestationData, renewableEnergyData, continentalRenewableEnergyData) {
 
     co2ShareData.forEach(function(d) {
         d.Global_CO2_emissions_share = parseFloat(d.Global_CO2_emissions_share);
@@ -23,6 +24,7 @@ function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData,
     let deforestation_ndx = crossfilter(deforestationData);
     let reforestation_ndx = crossfilter(reforestationData);
     let renewable_ndx = crossfilter(renewableEnergyData);
+    let continent_ndx = crossfilter(continentalRenewableEnergyData);
 
     buildSeaGraph(sea_ndx);
     buildTempGraph(temp_ndx);
@@ -30,7 +32,8 @@ function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData,
     buildCo2PpmGraph(atmosphere_ndx);
     buildDeforestationGraph(deforestation_ndx);
     buildReforestationGraph(reforestation_ndx);
-    buildRenewableEnergyGraph(renewable_ndx);
+    buildRenewableEnergyTypeGraph(renewable_ndx);
+    buildRenewableEnergyContinentGraph(continent_ndx);
     // showYearSelector(reforestation_ndx);
 
     dc.renderAll();
@@ -107,15 +110,16 @@ function buildSeaGraph(sea_ndx) {
         .x(d3.scale.linear().domain([minDate, maxDate]))
         .yAxisLabel("Global Sea Level Rise (mm)")
         .xAxisLabel("Year")
-};
+}
 
 
 
 
 //global temperature rise chart//
-let tempRiseChart = dc.compositeChart('#temperature_rise')
 
 function buildTempGraph(temp_ndx) {
+
+    let tempRiseChart = dc.compositeChart('#temperature_rise');
 
     yearDim = temp_ndx.dimension(dc.pluck('Year'));
 
@@ -241,7 +245,7 @@ function buildCo2PpmGraph(atmosphere_ndx) {
         .width(1000)
         .height(500)
         .x(d3.scale.linear().domain([minDate, maxDate]))
-        .y(d3.scale.linear().domain([300,420]))
+        .y(d3.scale.linear().domain([300, 420]))
         .brushOn(false)
         .yAxisLabel("Atmospheric CO2 concentration (parts per million (ppm))")
         .xAxisLabel("Year")
@@ -319,8 +323,8 @@ function buildReforestationGraph(reforestation_ndx) {
 
 //renewable energy chart
 
-function buildRenewableEnergyGraph(renewable_ndx) {
-    
+function buildRenewableEnergyTypeGraph(renewable_ndx) {
+
     let renewableEnergyChart = dc.barChart('#renewable_chart');
 
     yearDim = renewable_ndx.dimension(dc.pluck('Year'));
@@ -341,7 +345,7 @@ function buildRenewableEnergyGraph(renewable_ndx) {
         .width(1000)
         .height(500)
         .margins({ top: 50, right: 50, bottom: 50, left: 50 })
-        .legend(dc.legend().x(650).y(50).itemHeight(10).gap(10))
+        .legend(dc.legend().x(75).y(5).itemHeight(10).gap(10))
         .brushOn(false)
         .transitionDuration(500)
         .x(d3.scale.linear().domain([minDate, maxDate]))
@@ -354,4 +358,67 @@ function buildRenewableEnergyGraph(renewable_ndx) {
         .stack(solarEnergy, 'Solar Energy')
         .stack(bioEnergy, 'Bioenergy')
         .stack(geothermalEnergy, 'Geothermal Energy');
+}
+
+//renewable energy by continent chart
+
+function buildRenewableEnergyContinentGraph(continent_ndx) {
+
+    let continentChart = dc.compositeChart('#continent_chart');
+
+    yearDim = continent_ndx.dimension(dc.pluck('Year'));
+
+    let minDate = yearDim.bottom(1)[0].Year;
+    let maxDate = yearDim.top(1)[0].Year;
+
+    let africa = yearDim.group().reduceSum('Africa');
+    let asia = yearDim.group().reduceSum('Asia');
+    let centralAmerica = yearDim.group().reduceSum('Central_America_and_Carib');
+    let eurasia = yearDim.group().reduceSum('Eurasia');
+    let europe = yearDim.group().reduceSum('Europe');
+    let middleEast = yearDim.group().reduceSum('Middle_East');
+    let northAmerica = yearDim.group().reduceSum('North_America');
+    let oceania = yearDim.group().reduceSum('Oceania');
+    let southAmerica = yearDim.group().reduceSum('South_America');
+
+    continentChart
+        .width(1000)
+        .height(500)
+        .margins({ top: 50, right: 50, bottom: 50, left: 50 })
+        .legend(dc.legend().x(650).y(50).itemHeight(10).gap(10))
+        .dimension(yearDim)
+        .brushOn(false)
+        .transitionDuration(500)
+        .x(d3.scale.linear().domain([minDate, maxDate]))
+        .yAxisLabel("Renewable Energy Production (GWh)")
+        .xAxisLabel("Year")
+        .compose([
+            dc.lineChart(continentChart)
+            .colors('red')
+            .group(africa, 'Africa'),
+            dc.lineChart(continentChart)
+            .colors('green')
+            .group(asia, 'Asia'),
+            dc.lineChart(continentChart)
+            .colors('yellow')
+            .group(centralAmerica, 'Central America & Caribbean'),
+            dc.lineChart(continentChart)
+            .colors('red')
+            .group(eurasia, 'Eurasia'),
+            dc.lineChart(continentChart)
+            .colors('blue')
+            .group(europe, 'Europe'),
+            dc.lineChart(continentChart)
+            .colors('green')
+            .group(middleEast, 'Middle East'),
+              dc.lineChart(continentChart)
+            .colors('red')
+            .group(northAmerica, 'North America'),
+              dc.lineChart(continentChart)
+            .colors('yellow')
+            .group(oceania, 'Oceania'),
+              dc.lineChart(continentChart)
+            .colors('blue')
+            .group(southAmerica, 'South America')
+        ])
 }
