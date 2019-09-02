@@ -3,15 +3,13 @@ queue()
     .defer(d3.csv, 'data/global-temperature-rise.csv')
     .defer(d3.csv, 'data/annual-share-of-co2-emissions.csv')
     .defer(d3.csv, 'data/global-co2-concentration-ppm.csv')
-    .defer(d3.csv, 'data/global-deforestation.csv')
     .defer(d3.csv, 'data/uk-forest-maintenance.csv')
     .defer(d3.csv, 'data/renewable-energy.csv')
     .defer(d3.csv, 'data/renewable-continents.csv')
     .await(makeGraphs);
 
 
-function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData,
-    deforestationData, reforestationData, renewableEnergyData, continentalRenewableEnergyData) {
+function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData, reforestationData, renewableEnergyData, continentalRenewableEnergyData) {
 
     co2ShareData.forEach(function(d) {
         d.Global_CO2_emissions_share = parseFloat(d.Global_CO2_emissions_share);
@@ -21,7 +19,6 @@ function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData,
     let temp_ndx = crossfilter(tempData);
     let co2_share_ndx = crossfilter(co2ShareData);
     let atmosphere_ndx = crossfilter(co2AtmosphereData);
-    let deforestation_ndx = crossfilter(deforestationData);
     let reforestation_ndx = crossfilter(reforestationData);
     let renewable_ndx = crossfilter(renewableEnergyData);
     let continent_ndx = crossfilter(continentalRenewableEnergyData);
@@ -30,7 +27,6 @@ function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData,
     buildTempGraph(temp_ndx);
     buildCo2ShareGraph(co2_share_ndx);
     buildCo2PpmGraph(atmosphere_ndx);
-    buildDeforestationGraph(deforestation_ndx);
     buildReforestationGraph(reforestation_ndx);
     buildRenewableEnergyTypeGraph(renewable_ndx);
     buildRenewableEnergyContinentGraph(continent_ndx);
@@ -285,7 +281,10 @@ function buildReforestationGraph(reforestation_ndx) {
         .symbolSize(8)
         .clipPadding(10)
         .dimension(countryDim)
-        .group(newConifers);
+        .group(newConifers)
+        .group(newBroadleaves)
+        .group(restockBroadleaves)
+        .group(restockConifers);
 
 }
 
@@ -390,5 +389,3 @@ function buildRenewableEnergyContinentGraph(continent_ndx) {
             .group(southAmerica, 'South America')
         ]);
 }
-
-//reduce
