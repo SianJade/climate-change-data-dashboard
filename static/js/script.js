@@ -40,23 +40,6 @@ function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData,
 
 }
 
-//see more/less button
-function seeMore() {
-    let dots = document.getElementById('dots');
-    let more = document.getElementById('more');
-    let button = document.getElementById('see_more_button');
-    
-    if (dots.style.display === 'none'){
-        dots.style.display = 'inline';
-        button.innerHTML = 'See more';
-        more.style.display = 'none';
-    }else{
-        dots.style.display = 'none';
-        button.innerHTML = 'See less';
-        more.style.display = 'inline';
-    }
-}
-
 //countdown
 
 function countdown() {
@@ -99,6 +82,22 @@ function countdown() {
 }
 
 countdown();
+
+//see more/less button functionality
+
+function seeMore(element) {
+
+    let buttonClicked = event.target;
+    let more = document.getElementById(element);
+    if (more.style.display === "none"){
+        buttonClicked.innerText = "See Less";
+        more.style.display = "block";
+    } else {
+        buttonClicked.innerText = "See More";
+        more.style.display = "none";
+    }
+
+}
 
 //sea level rise line graph//
 
