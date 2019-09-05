@@ -18,6 +18,12 @@ As somebody who is looking to become more environmentally friendly, I would like
 ### User story 3:
 As a data analyst, I would like to be able to view relevant datasets relating to climate change all in one places in order to be able to look for correlations between these different datasets.
 
+### User story 4:
+As an environmental studies student at university I would like to be able to view the original datasets in order to cite them in my thesis paper.
+
+### User story 5:
+As a potential energy investor, I would like to be able to view global trends in the renewable energy sector so that I can decide which energy types are most suitable for me to invest in.
+
 ## Features
 
 ### Existing Features
@@ -38,7 +44,7 @@ As a data analyst, I would like to be able to view relevant datasets relating to
 ## Technologies Used
 
 - [HTML5](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5)
-    - The project uses HTML5 to construct the webpage for the dashboard itself.
+    - The project uses HTML5 to construct the webpage and layout for the dashboard itself.
 
 - [CSS3](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS3)
     - The project uses CSS3 in order to style the HTML5 and Bootstrap elements and components.
@@ -59,7 +65,7 @@ As a data analyst, I would like to be able to view relevant datasets relating to
     - The project uses D3.js order to style the prebuilt charts included in DC.js
 
 - [queue.js (v 1.0.7)](https://www.npmjs.com/package/queue)
-    - The project uses Queue.js in order to bind to the external datasets in the Data folder.
+    - The project uses Queue.js in order to bind to the external datasets in the Data folder, as well as to defer the rendering of the charts until all of the required datasets are fully imported.
 
 ## Testing
 
