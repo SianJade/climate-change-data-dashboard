@@ -8,6 +8,16 @@ The purpose of this data dashboard is raise awareness amongst the general public
 
 A live desktop demo can be found [here](https://sianjade.github.io/climate-change-data-dashboard/).
 
+## User stories
+# User story 1:
+As a school science teacher, I would like to access datasets and charts that allow me to show my students the causes and effects of climate change so that -----
+
+#User story 2:
+As somebody who is looking to become more environmentally friendly, I would like to find out what causes climate change and ways to reduce the the effects of it, so that I can implement relevant and effective changes to my own lifestyle to help combat climate change.
+
+#User story 3:
+As a data analyst, I would like to be able to view relevant datasets relating to climate change all in one places in order to be able to look for correlations between these different datasets.
+
 ## Features
 
 ### Existing Features
@@ -62,6 +72,7 @@ A live desktop demo can be found [here](https://sianjade.github.io/climate-chang
     - Click the green 'clone or download' button in the [GitHub repository for the project](https://github.com/SianJade/climate-change-data-dashboard).
     - Copy the link provided by clicking the clipboard button to the right of the link.
     - In your terminal, type `git clone`, paste in the previously copied link, and hit return.
+    - The application should now be installed on your device.
 
 ## Credits
 
