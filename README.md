@@ -47,16 +47,19 @@ As a data analyst, I would like to be able to view relevant datasets relating to
     - The project uses JavaScript to add interactivity to the dashboard and to retrieve certain data from CSV files for graphs and charts.
 
 - [Bootstrap (ver 4.3.1)](https://getbootstrap.com/)
-    - The project uses the Bootstrap 4 grid and components in order to achieve a responsive layout.
-
-- [dc.js (v 2.1.8)](https://dc-js.github.io/dc.js/)
-
-- [d3.js (v 3.5.17)](https://d3js.org/)
+    - The project uses the Bootstrap 4 grid and components in order to achieve a responsive layout, as well as Bootswatch theme Darkly for the colour scheme.
 
 - [crossfilter.js (v 1.3.12)](https://square.github.io/crossfilter/)
+    - The project uses the Crossfilter.js library in order to create dimensions and groups from the datasets that could then be used to build charts using DC.js.
+
+- [dc.js (v 2.1.8)](https://dc-js.github.io/dc.js/)
+    - The project uses the DC.js library in order to build graphs and charts from the prebuilt chart types included in the library.
+
+- [d3.js (v 3.5.17)](https://d3js.org/)
+    - The project uses D3.js order to style the prebuilt charts included in DC.js
 
 - [queue.js (v 1.0.7)](https://www.npmjs.com/package/queue)
-
+    - The project uses Queue.js in order to bind to the external datasets in the Data folder.
 
 ## Testing
 
