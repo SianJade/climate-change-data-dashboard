@@ -17,13 +17,14 @@
     <header class="text-center">
         <div class="text-and-button">
             <h2 class="jumbotron-text">According to the latest UN report there are only
-                <strong>11 years</strong> remaining before the devestating effects of climate change are <strong>irreversible</strong>.</h2>
-            <a href="#" class="btn btn-danger jumbotron-button" id="red_button" onclick="scrollToSection()">See the truth <strong>now</strong></a>
+                <strong>11 years</strong> remaining before the devestating effects of climate change are <strong>irreversible</strong>.
+            </h2>
+            <button onclick="scrollToSection()" class="btn btn-danger jumbotron-button" id="red_button">See the truth <strong>now</strong></button>
         </div>
     </header>
 
     <main>
-        <h2 class="text-center">The clock is ticking...</h2><br>
+        <h2 class="text-center">The clock is ticking...</h2>
         <table class="container text-center">
             <tr class="countdown">
                 <td id="years"></td>
@@ -48,7 +49,7 @@
         <section id="first-section">
             <article class="container text-center">
                 <h2>Global Average Sea Level Rise</h2>
-                <p>Average sea levels have swelled over 8 inches (about 23 cm) since 1880, with about three of those inches gained in the last 25 years alone. Every year, ocean levels rise by another 0.13 inches (3.2 mm).</p>
+                <p class="subheading">Average sea levels have swelled over 8 inches (about 23 cm) since 1880, with about three of those inches gained in the last 25 years alone. Every year, ocean levels rise by another 0.13 inches (3.2 mm).</p>
                 <figure id="sea_level_rise" class="graph-container"></figure>
                 <div class="row cause-container">
                     <h3>What causes this?</h3>
@@ -94,7 +95,7 @@
 
             <article class="container text-center">
                 <h2>Global Average Temperature Rise</h2>
-                <p>Whilst global average temperature's have always fluctuated naturally over time, the rapid and unwaivering rate of increase of Earth's average temperature since the late 70s in particular is a significant cause for concern.</p>
+                <p class="subheading">Whilst global average temperature's have always fluctuated naturally over time, the rapid and unwaivering rate of increase of Earth's average temperature since the late 70s in particular is a significant cause for concern.</p>
                 <figure id="temperature_rise" class="graph-container"></figure>
                 <div class="row cause-container">
                     <h3>What causes this?</h3>
@@ -128,7 +129,7 @@
                                 smog, and the hotter things get, the more of it we have. Dirtier air is linked to higher hospital admission rates and higher death rates for asthmatics. It worsens the health of people suffering from cardiac or pulmonary
                                 disease. And warmer temperatures also significantly increase airborne pollen, which is bad news for those who suffer from hay fever and other allergies.
                             </li>
-                            <li>Rising tempertures also mean higher sea levels - the polar regions are particularly vulnerable to a warming atmosphere. Average temperatures in the Arctic are rising twice as fast as they are elsewhere on earth, and the world's
+                            <li>Rising temperatures also mean higher sea levels - the polar regions are particularly vulnerable to a warming atmosphere. Average temperatures in the Arctic are rising twice as fast as they are elsewhere on earth, and the world's
                                 ice sheets are melting fast. This not only has grave consequences for the region's people, wildlife, and plants; its most serious impact may be on rising sea levels.
                             </li>
                         </ul>
@@ -142,6 +143,42 @@
             <article class="container text-center">
                 <h2>Annual share of co2 emissions by country</h2>
                 <figure id="co2_emissions" class="graph-container"></figure>
+                <h3>What causes this?</h3>
+                <div id="seeMore5">
+                    <p>The three biggest causes of high co2 emissions are:</p>
+                    <ul>
+                        <li>
+                            <a href="https://eu.usatoday.com/story/news/world/2018/12/05/carbon-dioxide-earths-atmosphere-soars-highest-level-millions-years/2215508002/" target="_blank">Burning Fossil Fuels
+                                </a>
+                        </li>
+                        <li>
+                            <a href="https://science.howstuffworks.com/environmental/green-science/human-activities-increase-carbon-dioxide.htm" target="_blank">Transportation
+                                </a>
+                        </li>
+                        <li>
+                            <a href="https://science.howstuffworks.com/environmental/green-science/human-activities-increase-carbon-dioxide.htm" target="_blank">Building and construction
+                                </a>
+                        </li>
+                    </ul>
+                </div>
+                <button onclick="seeMore('seeMore5')"></button>
+                </div>
+                <div class="row effect-container">
+                    <h3>What effect will this have?</h3>
+                    <div id="seeMore6">
+                        <ul>
+                            <li>Carbon dioxide emissions impact human health by displacing oxygen in the atmosphere. Breathing becomes more difficult as carbon dioxide levels rise. In closed areas, high levels of carbon dioxide can lead to health complaints
+                                such as headaches. Carbon dioxide levels may indicate high levels of other harmful air pollutants such as volatile organic compounds which contribute to indoor air pollution.
+                            </li>
+                            <li>The oceans absorb almost a quarter of CO2 emitted in the atmosphere. The excess CO2 reacts with the seawater to form carbonic acid. The acidification causes suppression of carbonate ion concentration that is essential for animals
+                                in the sea such as corals and shellfish to build bones and shells.
+                            </li>
+                            <li>Global Warming: The increase in the temperature is the major cause for all other changes in earth’s climate. The rise in temperatures is causing warming of oceans, melting of ice mass and increase in evaporation.
+                            </li>
+                        </ul>
+                    </div>
+                    <button onclick="seeMore('seeMore6')"></button>
+                </div>
             </article>
 
             <hr>
@@ -170,15 +207,16 @@
                     <h3>What effect will this have?</h3>
                     <div id="seeMore8">
                         <ul>
-                            <li>More frequent and severe weather; higher temperatures are worsening many types of disasters, including storms, heat waves, floods, and droughts. A warmer climate creates an atmosphere that can collect, retain, and drop more
-                                water, changing weather patterns in such a way that wet areas become wetter and dry areas drier.
+                            <li>Carbon dioxide contributes to air pollution in its role in the greenhouse effect. Carbon dioxide traps radiation at ground level, creating ground-level ozone. This atmospheric layer prevents the earth from cooling at night.
+                                One result is a warming of ocean waters. Oceans absorb carbon dioxide from the atmosphere. However, higher water temperatures compromise the oceans' ability to absorb carbon dioxide. Over time, the effects of carbon dioxide
+                                are compounded.
                             </li>
-                            <li>Rising temperatures also worsen air pollution by increasing ground level ozone, which is created when pollution from cars, factories, and other sources react to sunlight and heat. Ground-level ozone is the main component of
-                                smog, and the hotter things get, the more of it we have. Dirtier air is linked to higher hospital admission rates and higher death rates for asthmatics. It worsens the health of people suffering from cardiac or pulmonary
-                                disease. And warmer temperatures also significantly increase airborne pollen, which is bad news for those who suffer from hay fever and other allergies.
+                            <li>Another environmental effect of carbon dioxide on air pollution is climate change. The earth's surface temperature has risen over the last 100 years, according to studies done by the National Oceanic and Atmospheric Administration
+                                (NOAA). Scientists believe carbon dioxide pollution is the primary culprit. The effects are highly complex. Evidence shows, however, that ocean water levels have increased, resulting in a loss of shoreline and coastal wetlands.
                             </li>
-                            <li>Rising tempertures also mean higher sea levels - the polar regions are particularly vulnerable to a warming atmosphere. Average temperatures in the Arctic are rising twice as fast as they are elsewhere on earth, and the world's
-                                ice sheets are melting fast. This not only has grave consequences for the region's people, wildlife, and plants; its most serious impact may be on rising sea levels.
+                            <li>Carbon dioxide is a contributor to the environmental effect known as acid rain. Emissions released from fossil fuel-burning energy plants combine with moisture in the air. The result is precipitation with a high acid content.
+                                Documented evidence shows the physical damage to trees and other plant life. Water and soil pollution occur from the acidic precipitation. A complicating factor is the mobility of emissions. The effects of carbon dioxide
+                                can be seen and felt far from their sources, making their impacts on air pollution more serious.
                             </li>
                         </ul>
                     </div>
@@ -197,6 +235,20 @@
                 <div id="year-selector"></div>
                 <h2>UK Forest Maintenance (thousand hectares)</h2>
                 <figure id="reforestation_chart" class="graph-container"></figure>
+                <div class="row effect-container">
+                    <h3>What are the benefits of this?</h3>
+                    <div id="seeMore9">
+                        <ul>
+                            <li>Reducing carbon dioxide in the air - reforestation is the simplest way to improve the quality of the air we breathe. Plants soak in carbon dioxide from the air, helps in precipitation and lowering surface temperature.
+                            </li>
+                            <li>Plants help to reduce the amount of carbon dioxide in the air and significantly decreases the presence of toxic gases like methane. Forest are natural effective carbon sink. Carbon given out from burning fossil fuels is absorbed by the forests.
+                            </li>
+                            <li>Deforestation and urbanization has been a constant threat to the flora and fauna of any area. We have lost numerous valuable plants and many animals are facing threats to near extinction. Reforestation will not only check environmental pollution but help to preserve wildlife. 
+                            </li>
+                        </ul>
+                    </div>
+                    <button onclick="seeMore('seeMore9')"></button>
+                </div>
             </article>
 
             <hr>
@@ -204,6 +256,24 @@
             <article class="container text-center">
                 <h2>Worldwide Renewable Energy Production by Type</h2>
                 <figure id="renewable_chart" class="graph-container"></figure>
+                <div class="row effect-container">
+                    <h3>What are the benefits of this?</h3>
+                    <div id="seeMore10">
+                        <ul>
+                            <li>Most renewable energy sources produce little to no global warming emissions. Even when including “life cycle” emissions of clean energy (ie, the emissions from each stage of a technology’s life—manufacturing, installation,
+                                operation, decommissioning), the global warming emissions associated with renewable energy are minimal.
+                            </li>
+                            <li> Wind, solar, and hydroelectric systems generate electricity with no associated air pollution emissions. Geothermal and biomass systems emit some air pollutants, though total air emissions are generally much lower than those
+                                of coal- and natural gas-fired power plants.
+                            </li>
+                            <li>Wind and solar energy require essentially no water to operate and thus do not pollute water resources or strain supplies by competing with agriculture, drinking water, or other important water needs. In contrast, fossil fuels
+                                can have a significant impact on water resources: both coal mining and natural gas drilling can pollute sources of drinking water, and all thermal power plants, including those powered by coal, gas, and oil, withdraw and
+                                consume water for cooling.
+                            </li>
+                        </ul>
+                    </div>
+                    <button onclick="seeMore('seeMore10')"></button>
+                </div>
             </article>
 
             <hr>
@@ -211,6 +281,20 @@
             <article class="container text-center">
                 <h2>Worldwide Renewable Energy production by Continent</h2>
                 <figure id="continent_chart" class="graph-container"></figure>
+                <div class="row effect-container">
+                    <h3>What are the benefits of this?</h3>
+                    <div id="seeMore11">
+                        <ul>
+                            <li>Compared with fossil fuel technologies, which are typically mechanized and capital intensive, the renewable energy industry is more labor intensive. Solar panels need humans to install them; wind farms need technicians for maintenance.
+                            </li>
+                            <li>In addition to the jobs directly created in the renewable energy industry, growth in clean energy can create positive economic “ripple” effects. For example, industries in the renewable energy supply chain will benefit, and unrelated local businesses will benefit from increased household and business incomes.
+                            </li>
+                            <li>Local governments also benefit from clean energy, most often in the form of property and income taxes and other payments from renewable energy project owners. Owners of the land on which wind projects are built often receive lease payments ranging from $3,000 to $6,000 per megawatt of installed capacity, as well as payments for power line easements and road rights-of-way. They may also earn royalties based on the project’s annual revenues. Farmers and rural landowners can generate new sources of supplemental income by producing feedstocks for biomass power facilities.
+                            </li>
+                        </ul>
+                    </div>
+                    <button onclick="seeMore('seeMore11')"></button>
+                </div>
             </article>
 
             <hr>
