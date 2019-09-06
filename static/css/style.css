@@ -84,45 +84,52 @@ header {
 /* ------------ SMALL DEVICES ----------*/
 
 @media screen and (min-width: 300px) and (max-width: 700px) {
-    
+
     .text-and-button {
         padding-top: 85%;
     }
-    
+
     .jumbotron-text,
     .jumbotron-button {
         font-size: 18px;
     }
-    
+
     .jumbotron-text,
-    .divider-text{
+    .divider-text {
         line-height: 30px;
         width: 90%;
     }
-    
+
     td {
         padding: 10px;
     }
-    
+
     figure,
-    .graph-container{
+    .graph-container {
         overflow-x: scroll
     }
-    
+
     .subheading,
     .cause-container,
-    .effect-container{
-    width: 90%;
-    margin: 20px auto;
-    font-size: 14px;
-}
+    .effect-container {
+        width: 90%;
+        margin: 20px auto;
+        font-size: 14px;
+    }
 
 }
 
 
 /* ------------ MEDIUM DEVICES ----------*/
 
-/*@media screen and (min-width:751px) and (max-width:1025px) {}
+@media screen and (min-width:751px) and (max-width:1025px) {
+
+    figure,
+    .graph-container {
+        overflow-x: scroll
+    }
+
+}
 
 
 /* ------------ LARGE DEVICES ----------*/
