@@ -19,14 +19,14 @@
             <h2 class="jumbotron-text">According to the latest UN report there are only
                 <strong>11 years</strong> remaining before the devestating effects of climate change are <strong>irreversible</strong>.
             </h2>
-            <button onclick="scrollToSection()" class="btn btn-danger jumbotron-button" id="red_button">See the truth <strong>now</strong></button>
+            <a href="#countdown" class="btn btn-danger jumbotron-button" id="red_button">See the truth <strong>now</strong></a>
         </div>
     </header>
 
     <main>
         <h2 class="text-center">The clock is ticking...</h2>
         <table class="container text-center">
-            <tr class="countdown">
+            <tr class="countdown" id="countdown">
                 <td id="years"></td>
                 <td id="months"></td>
                 <td id="days"></td>
@@ -227,12 +227,11 @@
 
         <div class="page-divider container text-center">
             <h2 class="divider-text">But this doesn't have to be the <strong>end of the world</strong>...</h2>
-            <a href="#" class="btn btn-success">Start <strong>saving</strong> the Earth <strong>today</strong></a>
+            <a href="#reforestation-chart" class="btn btn-success">Start <strong>saving</strong> the Earth <strong>today</strong></a>
         </div>
 
         <section class="second-section">
             <article class="container text-center">
-                <div id="year-selector"></div>
                 <h2>UK Forest Maintenance (thousand hectares)</h2>
                 <figure id="reforestation_chart" class="graph-container"></figure>
                 <div class="row effect-container">
@@ -265,7 +264,7 @@
                             <li>Most renewable energy sources produce little to no global warming emissions. Even when including “life cycle” emissions of clean energy (ie, the emissions from each stage of a technology’s life—manufacturing, installation,
                                 operation, decommissioning), the global warming emissions associated with renewable energy are minimal.
                             </li>
-                            <li> Wind, solar, and hydroelectric systems generate electricity with no associated air pollution emissions. Geothermal and biomass systems emit some air pollutants, though total air emissions are generally much lower than those
+                            <li>Wind, solar, and hydroelectric systems generate electricity with no associated air pollution emissions. Geothermal and biomass systems emit some air pollutants, though total air emissions are generally much lower than those
                                 of coal- and natural gas-fired power plants.
                             </li>
                             <li>Wind and solar energy require essentially no water to operate and thus do not pollute water resources or strain supplies by competing with agriculture, drinking water, or other important water needs. In contrast, fossil fuels
