@@ -89,10 +89,11 @@ function seeMore(element) {
 
     let buttonClicked = event.target;
     let more = document.getElementById(element);
-    if (more.style.display === "none"){
+    if (more.style.display === "none") {
         buttonClicked.innerText = "See Less";
         more.style.display = "block";
-    } else {
+    }
+    else {
         buttonClicked.innerText = "See More";
         more.style.display = "none";
     }
@@ -234,23 +235,32 @@ function buildCo2ShareGraph(co2_share_ndx) {
         }
     );
 
-
-
-    console.log(totalEmissionsByCountry.all());
-
-
-    // dc.bubbleChart('#co2_emissions')
-    //     .width(1000)
-    //     .height(500)
-    //     .margins({ top: 50, right: 50, bottom: 50, left: 50 })
-    //     .dimension(totalEmissionsByCountry)
-    //     .group(totalEmissionsByCountry)
-    //     .x(d3.scale.linear([0,100]))
-    //     .y(d3.scale.linear().domain([1, 100]))
-    //     .r(d3.scale.linear().domain([0, 100]))
-    //     .renderLabel(true)
-    //     .renderHorizontalGridLines(true)
-    //     .maxBubbleRelativeSize(0.8)
+    dc.bubbleChart("#co2_emissions")
+        .width(1000)
+        .height(500)
+        .margins({ top: 50, right: 50, bottom: 50, left: 50 })
+        .dimension(countryDim)
+        .group(totalEmissionsByCountry)
+        .colors(d3.scale.category20())
+        .keyAccessor(function(p) {
+            return p.value.max;
+        })
+        .valueAccessor(function(p) {
+            return p.value.min;
+        })
+        .radiusValueAccessor(function(p) {
+            return p.value.average;
+        })
+        .x(d3.scale.linear().domain([0,100]))
+        .r(d3.scale.linear().domain([0,100]))
+        .maxBubbleRelativeSize(0.15)
+        .minRadiusWithLabel(12)
+        .elasticY(true)
+        .elasticX(true)
+        .xAxisPadding(10)
+        .yAxisPadding(5)
+        .xAxisLabel('Maximum recorded emissions')
+        .yAxisLabel('Minimun recorded emissions');
 }
 
 
@@ -270,13 +280,14 @@ function buildCo2PpmGraph(atmosphere_ndx) {
     dc.barChart('#co2_ppm_chart')
         .width(1000)
         .height(500)
+        .margins({ top: 50, right: 50, bottom: 50, left: 50 })
         .x(d3.scale.linear().domain([minDate, maxDate]))
         .y(d3.scale.linear().domain([300, 420]))
         .brushOn(false)
         .yAxisLabel("Atmospheric CO2 concentration (parts per million (ppm))")
         .xAxisLabel("Year")
         .dimension(yearDim)
-        .group(co2ppm)
+        .group(co2ppm);
 }
 
 
@@ -350,8 +361,8 @@ function buildRenewableEnergyTypeGraph(renewable_ndx) {
     renewableEnergyChart
         .width(1000)
         .height(500)
-        .margins({ top: 50, right: 50, bottom: 50, left: 50 })
-        .legend(dc.legend().x(70).y(10).itemHeight(10).gap(10))
+        .margins({ top: 50, right: 50, bottom: 50, left: 70 })
+        .legend(dc.legend().x(90).y(10).itemHeight(10).gap(10))
         .brushOn(false)
         .transitionDuration(500)
         .x(d3.scale.linear().domain([minDate, maxDate]))
@@ -391,8 +402,8 @@ function buildRenewableEnergyContinentGraph(continent_ndx) {
     continentChart
         .width(1000)
         .height(500)
-        .margins({ top: 50, right: 50, bottom: 50, left: 50 })
-        .legend(dc.legend().x(70).y(5).itemHeight(10).gap(10))
+        .margins({ top: 50, right: 50, bottom: 50, left: 70 })
+        .legend(dc.legend().x(90).y(5).itemHeight(10).gap(10))
         .dimension(yearDim)
         .brushOn(false)
         .transitionDuration(500)
