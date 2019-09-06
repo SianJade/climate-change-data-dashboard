@@ -38,10 +38,26 @@ As a potential energy investor, I would like to be able to view global trends in
 
 - In order to make the dashboard more compact and take up less unnecessary vertical space on the user's device, a see more button has been added to the information below each graph so that user's can decide whether or not they wish to see more contextual information about each particular graph. This feature is particularly useful on mobile devices where screen space is much more limited, however I decided to implement this feature across all device sizes in order to avoid the potential for information overload.
 
+- On mobile devices, a horizontal scroll has been applied to all divs which contain graphs as dc.js graphs are not responsive, and would be very difficult to read if their width was reduced to fit the smaller screen size. The rest of the dashboard is responsive, and adding this horizontal scroll to the graph divs only ensures that the whole page does not scroll sideways on swiping the screen.
+
+- DC line charts are included to show global average temperature rise as well as global average sea level rise. When hovering the mouse over an item in the chart's legend, the corresponding line on the graph will be highlighted and the other lines will fade until the mouse is removed from hovering over that particular legend item.
+
+- DC bubble chart with the bubble's x coordinate showing each country's maximum recorded annual co2 emissions, the y coordinate showing their minimum recorded annual co2 emissions, and the radius of the bubble representing the country's average annual share of co2 emissions. When hovering the mouse over a particular bubble, a tooltip will appear containing the country's exact maximum emissions figure and their exact aveerage emissions figure.
+
+- DC bar chart showing the increase in atmospheric co2 concentration each year - the exact figure for any given year will be shown in a tooltip upon hovering the mouse over a particular bar.
+
+- Composite DC scatter plot showing new planting figures for conifers and broadleaves in UK forests by country, as well as restocking figures for conifers and broadleaves in UK forests by country.
+
+- Stacked DC bar chart showing worldwide renewable eneergy production by type and its increase each year. Upon hovering over a slice in the a stacked bar, a tooltip will appear displaying the precise number of GWh for that particular energy type in that particular year.
+
+- Stacked DC line chart showing the increase in renewable enegry production each year by continent.
+
+- All links to external websites use the `target='blank'` attribute in order to ensure that they open in a new tab when clicked, rather than in the current tab and taking the user off of the dashboard page. This eleminates the need for the use of the browser's back and forward buttons.
+
 
 ### Features Left to Implement
 
-- In future versions of the website, I would like to implement world maps using TopoGeo.JSON and d3.js inorder to show relevant climate change data, fossil fuel consumption, and renewable enegry data for each individual country as the user hovers over it with their mouse.
+- In future versions of the website, I would like to implement world maps using TopoGeo.JSON and d3.js in order to show relevant climate change data, fossil fuel consumption, and renewable enegry data for each individual country as the user hovers over it with their mouse.
 
 - I would also like to add a news aggregator widget to the dashboard that shows recent relevant news articles regarding climate change and renewable energy.
 
