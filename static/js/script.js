@@ -34,7 +34,7 @@ function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData,
     buildRenewableEnergyTypeGraph(renewable_ndx);
     buildRenewableEnergyContinentGraph(continent_ndx);
     // buildFootprintReductionGraph(footprint_ndx);
-    // showYearSelector(reforestation_ndx);
+    //showYearSelector(reforestation_ndx);
 
     dc.renderAll();
 
@@ -193,7 +193,7 @@ function buildTempGraph(temp_ndx) {
             dc.lineChart(tempRiseChart)
             .colors('yellow')
             .group(tropicsRise, 'Tropics average temperature rise')
-        ])
+        ]);
 }
 
 
@@ -251,8 +251,8 @@ function buildCo2ShareGraph(co2_share_ndx) {
         .radiusValueAccessor(function(p) {
             return p.value.average;
         })
-        .x(d3.scale.linear().domain([0,100]))
-        .r(d3.scale.linear().domain([0,100]))
+        .x(d3.scale.linear().domain([0, 100]))
+        .r(d3.scale.linear().domain([0, 100]))
         .maxBubbleRelativeSize(0.15)
         .minRadiusWithLabel(12)
         .elasticY(true)
@@ -316,11 +316,14 @@ function buildReforestationGraph(reforestation_ndx) {
     reforestationChart
         .width(1000)
         .height(500)
-        .x(d3.scale.linear().domain([0, 20]))
+        .legend(dc.legend().x(90).y(5).itemHeight(10).gap(10))
+        .margins({ top: 50, right: 50, bottom: 50, left: 70 })
+        .x(d3.scale.ordinal().domain(['England', 'Wales', 'Scotland', 'Northern_Ireland', 'UK']))
+        .xUnits(dc.units.ordinal)
         .y(d3.scale.linear().domain([0, 20]))
         .brushOn(false)
-        .xAxisLabel('Broadleaves')
-        .yAxisLabel('Conifers')
+        .xAxisLabel('Country')
+        .yAxisLabel('Trees planted')
         .clipPadding(10)
         .dimension(countryDim)
         .compose([
@@ -337,7 +340,6 @@ function buildReforestationGraph(reforestation_ndx) {
             .group(restockBroadleaves, "Restocking Broadleaves")
             .colors("yellow"),
         ]);
-
 }
 
 //renewable energy by type chart
