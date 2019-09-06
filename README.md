@@ -89,6 +89,11 @@ As a potential energy investor, I would like to be able to view global trends in
 
 ## Testing
 
+- HTML code has been run through the [W3C Markup Validator](https://validator.w3.org/) and corrected accordingly. Only one waring has not been addressed, that being "Section lacks heading. Consider using h2-h6 elements to add identifying headings to all sections." However each section contains multiple articles each with their own clearly defined heading, as such I did not add headings to the two sections.
+
+- CSS code has been validated via the [W3C CSS Validator](https://jigsaw.w3.org/css-validator/) and returned no errors.
+
+- 
 
 ## Deployment
 - The dashbaord is hosted via GitHub Pages and is deployed from the master branch - this is to allow the deployed dashboard to automatically update with any new commits that are made to the master branch.
@@ -108,6 +113,13 @@ As a potential energy investor, I would like to be able to view global trends in
 
 ### Content
 
+- Information accompanying atmospheric co2 concentration chart was found on [Sciencing.com](https://sciencing.com/list-5921485-effects-carbon-dioxide-air-pollution.html)
+
+- Information accompanying annual share of co2 emissions chart can be found at [science.howstuffworks.com](https://science.howstuffworks.com/environmental/green-science/human-activities-increase-carbon-dioxide.htm)
+
+- Information accompanying renewable energy production by type and renewable energy by continent charts can be found at [uscusa.org](https://www.ucsusa.org/clean-energy/renewable-energy/public-benefits-of-renewable-power)
+
+- Information accompanying forest maintenance graph can be found at [eartheclipse.com](https://www.eartheclipse.com/environment/advantages-and-importance-of-reforestation.html)
 
 ### Media
 
