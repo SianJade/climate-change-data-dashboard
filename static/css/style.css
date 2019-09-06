@@ -100,10 +100,6 @@ header {
         width: 90%;
     }
 
-    .countdown {
-        padding: 2px;
-    }
-
     figure,
     .graph-container {
         overflow-x: scroll
