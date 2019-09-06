@@ -122,10 +122,10 @@ header {
         margin: 20px auto;
         font-size: 14px;
     }
-    
+
     .divider-text {
-    margin: 50px auto;
-}
+        margin: 50px auto;
+    }
 
 }
 
@@ -138,5 +138,8 @@ header {
     .graph-container {
         overflow-x: scroll
     }
-
+    .divider-text {
+        margin: 50px auto;
+        width: 70%;
+    }
 }
