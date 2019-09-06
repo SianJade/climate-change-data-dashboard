@@ -41,8 +41,15 @@ header {
 #seeMore8,
 #seeMore9,
 #seeMore10,
-#seeMore11 {
+#seeMore11,
+#seeMore12 {
     display: none;
+}
+
+.see-more {
+    height: 30px;
+    width: 100px;
+    color: black;
 }
 
 .subheading {
