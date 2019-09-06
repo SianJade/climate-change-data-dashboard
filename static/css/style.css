@@ -134,11 +134,17 @@ header {
 
 @media screen and (min-width:751px) and (max-width:1025px) {
 
+    .text-and-button {
+        padding-top: 35%;
+    }
+
     figure,
     .graph-container {
         overflow-x: scroll
     }
-    .divider-text {
+    
+    .jumbotron-text,
+    .divider-text{
         margin: 50px auto;
         width: 70%;
     }
