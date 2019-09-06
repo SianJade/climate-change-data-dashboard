@@ -100,7 +100,7 @@ header {
         width: 90%;
     }
 
-    td {
+    .countdown {
         padding: 20px;
     }
 
