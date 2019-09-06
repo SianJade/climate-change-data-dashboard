@@ -31,6 +31,17 @@ header {
     font-size: 25px;
 }
 
+#seeMore1,
+#seeMore2,
+#seeMore3,
+#seeMore4,
+#seeMore5,
+#seeMore6,
+#seeMore7,
+#seeMore8 {
+    display: none;
+}
+
 figcaption {
     width: 50%;
     margin: 25px auto;
@@ -44,9 +55,6 @@ figcaption {
     box-shadow: 1px 1px 5px 1px #000;
 }
 
-#more {
-    display: none;
-}
 
 .cause-container,
 .effect-container {
@@ -71,7 +79,7 @@ figcaption {
 
 /* ------------ SMALL DEVICES ----------*/
 
-@media screen and (min-width: 350px) and (max-width: 700px) {
+@media screen and (min-width: 300px) and (max-width: 700px) {
     
     .text-and-button {
         padding-top: 85%;
@@ -88,6 +96,7 @@ figcaption {
         width: 90%;
     }
     
+    figure,
     .graph-container{
         overflow-x: scroll
     }
