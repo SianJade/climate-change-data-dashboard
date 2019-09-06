@@ -24,7 +24,7 @@ function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData,
     let reforestation_ndx = crossfilter(reforestationData);
     let renewable_ndx = crossfilter(renewableEnergyData);
     let continent_ndx = crossfilter(continentalRenewableEnergyData);
-    // let footprint_ndx = crossfilter(reduceEmissionsData);
+    let footprint_ndx = crossfilter(reduceEmissionsData);
 
     buildSeaGraph(sea_ndx);
     buildTempGraph(temp_ndx);
@@ -33,8 +33,7 @@ function makeGraphs(error, seaData, tempData, co2ShareData, co2AtmosphereData,
     buildReforestationGraph(reforestation_ndx);
     buildRenewableEnergyTypeGraph(renewable_ndx);
     buildRenewableEnergyContinentGraph(continent_ndx);
-    // buildFootprintReductionGraph(footprint_ndx);
-    //showYearSelector(reforestation_ndx);
+    buildFootprintReductionGraph(footprint_ndx);
 
     dc.renderAll();
 
@@ -291,15 +290,6 @@ function buildCo2PpmGraph(atmosphere_ndx) {
 }
 
 
-// function showYearSelector(reforestation_ndx) {
-//     dim = reforestation_ndx.dimension(dc.pluck('Year'));
-//     group = dim.group();
-
-//     dc.selectMenu('#year_selector')
-//         .dimension(dim)
-//         .group(group);
-// }
-
 //reforestation chart
 
 function buildReforestationGraph(reforestation_ndx) {
@@ -426,19 +416,16 @@ function buildRenewableEnergyContinentGraph(continent_ndx) {
 
 // //minimising carbon footprint chart
 
-// function buildFootprintReductionGraph(footprint_ndx) {
+function buildFootprintReductionGraph(footprint_ndx) {
+    let changeDim = footprint_ndx.dimension(dc.pluck('Change'));
 
-//     let footprintChart = dc.pieChart('#footprint_chart');
+    let emissionsReduction = changeDim.group().reduceSum(dc.pluck('Co2_emissions_saved_per_year'));
 
-//     let changeDim = footprint_ndx.dimension(dc.pluck('Change'));
-
-//     let reduction = changeDim.group().reduceSum(dc.pluck('Co2_emissions_saved_per_year'));
-
-//     footprintChart
-//     .height(1000)
-//     .radius(100)
-//     .transitionDuration(500)
-//     .dimension(changeDim)
-//     .group(reduction);
-
-// }
+    dc.pieChart('#footprint_chart')
+        .width(1000)
+        .height(500)
+        .radius(200)
+        .legend(dc.legend().x(90).y(15).itemHeight(10).gap(10))
+        .dimension(changeDim)
+        .group(emissionsReduction);
+}
