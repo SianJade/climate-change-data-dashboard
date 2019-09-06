@@ -107,6 +107,8 @@ As a potential energy investor, I would like to be able to view global trends in
 
 - Currently the `see more` buttons beneath each graph do not show text on page load, and they require two clicks in order for the information to be displayed, however from this point on they do work as intended and show more/less text on click. At present I have not determined what exactly is causing this issue, although in future releases I will look to remedy this issue.
 
+- At present, there are overlapping bubbles for over 200 countries in the annual share of co2 emissions bubble chart, in future releases I will look to only display the top 20 co2 emitting countries on page load, and implement a dropdown menu for the user to be able to select other countries to view outside of this default range.
+
 ## Deployment
 - The dashbaord is hosted via GitHub Pages and is deployed from the master branch - this is to allow the deployed dashboard to automatically update with any new commits that are made to the master branch.
 
