@@ -6,11 +6,15 @@ Stream Two Project: Interactive Frontend Development - Code Institute
 ## UX
 The purpose of this data dashboard is raise awareness amongst the general public about climate change via the use of datasets and graphs that clearly demonstrate the negative effects of climate change on our planet, as well as to provide datasets and graphs that will show the user what the most effective ways to combat the negative effects of climate change on both as an individual, and on a societal and global scale.
 
+The emotive images used in the jumbotron and page divider of the dashboard are intended to catch the user's attention evoke an emotional response from the user in order to increase the likelihood that they will take more of the information contained in the dashboard to heart.
+
+The first four graphs within the dashboard are intended to provide the user with a clear picture of exactly what climate change entails, such as rising sea levels and increased atmospheric co2 concentration. These graphs are intended to invoke concern over climate change in the user so that they may be more inclined to find out ways to combat he effects of climate change. The second set of graphs is designed to give the usere some hope that positivge chages can be made to help combat climate change, and provide insight into what these changes may be.
+
 A live desktop demo can be found [here](https://sianjade.github.io/climate-change-data-dashboard/).
 
 ## User stories
 ### User story 1:
-As a school science teacher, I would like to access datasets and charts that allow me to show my students the causes and effects of climate change so that -----
+As a school science teacher, I would like to access datasets and charts that allow me to show my students the causes and effects of climate change so that my students can gain a better understanding of issues that have a direct impact on our future as a society.
 
 ### User story 2:
 As somebody who is looking to become more environmentally friendly, I would like to find out what causes climate change and ways to reduce the the effects of it, so that I can implement relevant and effective changes to my own lifestyle to help combat climate change.
@@ -30,9 +34,9 @@ As a potential energy investor, I would like to be able to view global trends in
 
 - The dashboard features a Javascript countdown timer which is counting down to 11 years from the publication date of the UN report cited in the page's jumbotron; this feature is designed to give the reader a sense of how little time is left for measures against the impacts of climate change to be implemented, it is designed to provide a sense of urgency to the user.
 
-- In order to make the dashboard more compact and take up less unnecessary vertical space on the user's device, a see more button has been added to the information below each graph so that user's can decide whether or not they wish to see more contextual information about each particular graph. This feature is particularly useful on mobile devices where screen space is much more limited, however I decided to implement this feature across all device sizes in order to avoid the potential for information overload.
-
 - Below each graph I have added extra contextual information to help users fully understand what the graph is showing, as well as how this impacts climate change and what the consequences may be. Aside from providing extra context for the graphs, I also felt that this was necessary in order to invoke an emotional reaction in the user so that after viewing the data, they may be more likely to enact changes in their lives which may have a positive effect on the environment and climate change.
+
+- In order to make the dashboard more compact and take up less unnecessary vertical space on the user's device, a see more button has been added to the information below each graph so that user's can decide whether or not they wish to see more contextual information about each particular graph. This feature is particularly useful on mobile devices where screen space is much more limited, however I decided to implement this feature across all device sizes in order to avoid the potential for information overload.
 
 
 ### Features Left to Implement
