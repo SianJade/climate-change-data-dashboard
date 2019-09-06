@@ -105,6 +105,8 @@ As a potential energy investor, I would like to be able to view global trends in
 
 - At present, none of the data points in the UK forest maintenance graph are rendering on the chart. I have tried making the scatter plot into a composite scatter plot to combat this, however this did not work. I also tried making the x axis scale ordinal rather than linear, however this did not remedy the situation either. In future releases I will attempt to find a way to get the relevant data points to render on the graph.
 
+- Currently the `see more` buttons beneath each graph do not show text on page load, and they require two clicks in order for the information to be displayed, however from this point on they do work as intended and show more/less text on click. At present I have not determined what exactly is causing this issue, although in future releases I will look to remedy this issue.
+
 ## Deployment
 - The dashbaord is hosted via GitHub Pages and is deployed from the master branch - this is to allow the deployed dashboard to automatically update with any new commits that are made to the master branch.
 
