@@ -329,7 +329,7 @@ function buildReforestationGraph(reforestation_ndx) {
 
 }
 
-//renewable energy chart
+//renewable energy by type chart
 
 function buildRenewableEnergyTypeGraph(renewable_ndx) {
 
@@ -347,13 +347,11 @@ function buildRenewableEnergyTypeGraph(renewable_ndx) {
     let bioEnergy = yearDim.group().reduceSum(dc.pluck('Bioenergy'));
     let geothermalEnergy = yearDim.group().reduceSum(dc.pluck('Geothermal_energy'));
 
-
-
     renewableEnergyChart
         .width(1000)
         .height(500)
         .margins({ top: 50, right: 50, bottom: 50, left: 50 })
-        .legend(dc.legend().x(75).y(5).itemHeight(10).gap(10))
+        .legend(dc.legend().x(70).y(10).itemHeight(10).gap(10))
         .brushOn(false)
         .transitionDuration(500)
         .x(d3.scale.linear().domain([minDate, maxDate]))
@@ -367,6 +365,7 @@ function buildRenewableEnergyTypeGraph(renewable_ndx) {
         .stack(bioEnergy, 'Bioenergy')
         .stack(geothermalEnergy, 'Geothermal Energy');
 }
+
 
 //renewable energy by continent chart
 
@@ -393,7 +392,7 @@ function buildRenewableEnergyContinentGraph(continent_ndx) {
         .width(1000)
         .height(500)
         .margins({ top: 50, right: 50, bottom: 50, left: 50 })
-        .legend(dc.legend().x(650).y(50).itemHeight(10).gap(10))
+        .legend(dc.legend().x(70).y(5).itemHeight(10).gap(10))
         .dimension(yearDim)
         .brushOn(false)
         .transitionDuration(500)
