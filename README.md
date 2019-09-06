@@ -9,6 +9,8 @@ The emotive images used in the jumbotron and page divider of the dashboard are i
 
 The first four graphs within the dashboard are intended to provide the user with a clear picture of exactly what climate change entails, such as rising sea levels and increased atmospheric co2 concentration. These graphs are intended to invoke concern over climate change in the user so that they may be more inclined to find out ways to combat he effects of climate change. The second set of graphs is designed to give the usere some hope that positivge chages can be made to help combat climate change, and provide insight into what these changes may be.
 
+Wireframes for the dashboard can be found in the assets folder of the repository.
+
 A live desktop demo can be found [here](https://sianjade.github.io/climate-change-data-dashboard/).
 
 ## User stories
