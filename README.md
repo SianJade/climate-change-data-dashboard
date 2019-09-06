@@ -2,7 +2,6 @@
 
 Stream Two Project: Interactive Frontend Development - Code Institute
  
- 
 ## UX
 The purpose of this data dashboard is raise awareness amongst the general public about climate change via the use of datasets and graphs that clearly demonstrate the negative effects of climate change on our planet, as well as to provide datasets and graphs that will show the user what the most effective ways to combat the negative effects of climate change on both as an individual, and on a societal and global scale.
 
@@ -42,13 +41,13 @@ As a potential energy investor, I would like to be able to view global trends in
 
 - DC line charts are included to show global average temperature rise as well as global average sea level rise. When hovering the mouse over an item in the chart's legend, the corresponding line on the graph will be highlighted and the other lines will fade until the mouse is removed from hovering over that particular legend item.
 
-- DC bubble chart with the bubble's x coordinate showing each country's maximum recorded annual co2 emissions, the y coordinate showing their minimum recorded annual co2 emissions, and the radius of the bubble representing the country's average annual share of co2 emissions. When hovering the mouse over a particular bubble, a tooltip will appear containing the country's exact maximum emissions figure and their exact aveerage emissions figure.
+- DC bubble chart with the bubble's x co-ordinate showing each country's maximum recorded annual co2 emissions, the y co-ordinate showing their minimum recorded annual co2 emissions, and the radius of the bubble representing the country's average annual share of co2 emissions. When hovering the mouse over a particular bubble, a tooltip will appear containing the country's exact maximum emissions figure and their exact average emissions figure.
 
 - DC bar chart showing the increase in atmospheric co2 concentration each year - the exact figure for any given year will be shown in a tooltip upon hovering the mouse over a particular bar.
 
 - Composite DC scatter plot showing new planting figures for conifers and broadleaves in UK forests by country, as well as restocking figures for conifers and broadleaves in UK forests by country.
 
-- Stacked DC bar chart showing worldwide renewable eneergy production by type and its increase each year. Upon hovering over a slice in the a stacked bar, a tooltip will appear displaying the precise number of GWh for that particular energy type in that particular year.
+- Stacked DC bar chart showing worldwide renewable energy production by type and its increase each year. Upon hovering over a slice in the a stacked bar, a tooltip will appear displaying the precise number of GWh for that particular energy type in that particular year.
 
 - Stacked DC line chart showing the increase in renewable enegry production each year by continent.
 
