@@ -41,8 +41,7 @@ header {
 #seeMore8,
 #seeMore9,
 #seeMore10,
-#seeMore11,
-#seeMore12 {
+#seeMore11 {
     display: none;
 }
 
@@ -126,13 +125,3 @@ header {
     }
 
 }
-
-
-/* ------------ LARGE DEVICES ----------*/
-
-/*@media only screen and (min-width: 1025px) {}
-
-
-/* ------------ EXTRA LARGE DEVICES ----------*/
-
-/*@media only screen and (min-width: 1200px) {}
