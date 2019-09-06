@@ -84,6 +84,10 @@ header {
     background-repeat: no-repeat;
 }
 
+.divider-text {
+    margin: 100px auto;
+}
+
 
 /*----------------- MEDIA QUERIES -----------------*/
 
@@ -118,6 +122,10 @@ header {
         margin: 20px auto;
         font-size: 14px;
     }
+    
+    .divider-text {
+    margin: 50px auto;
+}
 
 }
 
