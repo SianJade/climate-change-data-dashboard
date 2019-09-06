@@ -42,7 +42,7 @@ header {
     display: none;
 }
 
-figcaption {
+.subheading {
     width: 50%;
     margin: 25px auto;
     font-size: 16px;
@@ -101,7 +101,7 @@ figcaption {
         overflow-x: scroll
     }
     
-    figcaption,
+    .subheading,
     .cause-container,
     .effect-container{
     width: 90%;
